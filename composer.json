@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "laravel/homestead": "^7.20"
+    },
+    "require": {
+        "laravel/laravel": "^5.7"
     }
 }
