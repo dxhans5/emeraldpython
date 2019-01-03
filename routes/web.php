@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes(['register' => false]);
+Route::get('logout/', 'Auth\LoginController@logout');
+Route::get('dashboard/', 'DashboardController');
