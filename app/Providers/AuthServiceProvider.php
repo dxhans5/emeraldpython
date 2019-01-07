@@ -26,11 +26,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Auth::viaRequest('isAdmin', function ($request) {
-            $user = User::where('token', $request->token)->first();
-
-            Logger::info($user);
-        });
     }
 }

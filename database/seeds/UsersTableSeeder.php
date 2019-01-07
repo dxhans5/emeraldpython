@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'dxhans5@gmail.com',
                 'email_verified_at' => Carbon::now(),
                 'password' => Hash::make('password'),
+                'is_admin' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

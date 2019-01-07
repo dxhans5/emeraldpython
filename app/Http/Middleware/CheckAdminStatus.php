@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
-class CheckAdminState
+class CheckAdminStatus
 {
     /**
      * Handle an incoming request.
@@ -16,7 +17,7 @@ class CheckAdminState
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('isAdmin')->check()) {
+        if(!Auth::check() || !Auth::user()->is_admin) {
             return redirect('/dashboard');
         }
 
