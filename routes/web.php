@@ -16,3 +16,5 @@ Route::get('logout/', 'Auth\LoginController@logout');
 Route::get('', 'DashboardController');
 Route::get('dashboard/', 'DashboardController');
 Route::get('admin/', 'Admin\DashboardController');
+
+Route::resource('admin/account/fulfillment-policy', 'FulfillmentPolicyController');

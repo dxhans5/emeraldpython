@@ -28,6 +28,7 @@
 </head>
 <body>
     <div class='row p-0 m-0'>
+        @auth
         <div class='col-sm-2 p-0 m-0'>
             @if( !empty($isAdmin) )
                 @include('layouts.admin_nav')
@@ -35,7 +36,9 @@
                 @include('layouts.nav')
             @endif
         </div>
-        <div class='col-sm-10'>
+        @endauth
+        <div class='col-sm-10 pt-4'>
+            @include('layouts.toasts')
             @yield('content')
         </div>
     </div>
