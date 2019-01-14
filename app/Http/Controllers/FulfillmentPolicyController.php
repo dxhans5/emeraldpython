@@ -12,6 +12,7 @@ class FulfillmentPolicyController extends Controller
 
     private $RESOURCE_URI = 'https://api.ebay.com/sell/account/v1/fulfillment_policy/';
     private $client;
+    private $headers;
 
     /**
      * Constructor...limits access to authenticated users
@@ -24,6 +25,11 @@ class FulfillmentPolicyController extends Controller
         $this->client = new Client(
             ['base_uri' => $this->RESOURCE_URI]
         );
+
+        // Setup the headers
+        $this->headers = [
+            'Authorization' => 'Bearer ' . env('EBAY_CREDS'),
+        ];
     }
 
     /**
@@ -34,9 +40,12 @@ class FulfillmentPolicyController extends Controller
     public function index(Request $request, $marketplace_id='EBAY_US')
     {
         $uri = '?marketplace_id=' . $marketplace_id;
+        $options = [
+            'headers' => $this->headers
+        ];
         $policies = [];
         try {
-            $policies = $this->client->get($uri);
+            $policies = $this->client->get($uri, $options);
         } catch (RequestException $e) {
             $response = json_decode($e->getResponse()->getBody()->getContents());
             $request->session()->flash('errors', $response);
