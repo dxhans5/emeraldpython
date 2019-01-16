@@ -26,11 +26,6 @@ class FulfillmentPolicyController extends Controller
         $this->client = new Client(
             ['base_uri' => $this->RESOURCE_URI]
         );
-
-        // Setup the headers
-        $this->headers = [
-            'Authorization' => 'Bearer ' . env('EBAY_CREDS'),
-        ];
     }
 
     /**
@@ -42,8 +37,12 @@ class FulfillmentPolicyController extends Controller
     {
         $uri = '?marketplace_id=' . $marketplace_id;
         $options = [
-            'headers' => $this->headers
+            'headers' => [
+                'Authorization' => 'Bearer IAF ' . session('access_token')
+            ],
+            'debug' => true
         ];
+        print_r($options);
         $policies = [];
         try {
             $policies = $this->client->get($uri, $options);
