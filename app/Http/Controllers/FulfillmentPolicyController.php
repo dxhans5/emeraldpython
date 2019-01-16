@@ -20,6 +20,7 @@ class FulfillmentPolicyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('access.token');
 
         // Setup the Guzzle client
         $this->client = new Client(

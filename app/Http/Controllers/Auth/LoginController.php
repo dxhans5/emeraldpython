@@ -49,4 +49,13 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    /**
+     * Obtain acess token
+     *
+     * @return void
+     */
+    public function accessToken(Request $request) {
+        print_r('access token llll');
+    }
 }
