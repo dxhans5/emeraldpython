@@ -38,11 +38,10 @@ class FulfillmentPolicyController extends Controller
         $uri = '?marketplace_id=' . $marketplace_id;
         $options = [
             'headers' => [
-                'Authorization' => 'Bearer IAF ' . session('access_token')
+                'Authorization' => 'Bearer ' . session('user_token')
             ],
             'debug' => true
         ];
-        print_r($options);
         $policies = [];
         try {
             $policies = $this->client->get($uri, $options);
@@ -50,6 +49,7 @@ class FulfillmentPolicyController extends Controller
             $response = json_decode($e->getResponse()->getBody()->getContents());
             $request->session()->flash('errors', $response);
         }
+
         return view('admin.fulfillment_policy.list', ['policies' => $policies]);
     }
 

@@ -15,10 +15,13 @@ class ConfigTable extends Migration
     {
         Schema::create('config', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('client_token'); // provided from ebay when the policy is actually created
-            $table->string('expires_at');
-            $table->string('refresh_token')->nullable(true);
+            $table->text('client_token');
+            $table->string('client_token_expires_at');
             $table->string('client_token_type');
+            $table->text('user_token')->nullable()->default(null);
+            $table->string('user_token_expires_at')->nullable()->default(null);
+            $table->string('user_refresh_token')->nullable(true);
+            $table->string('user_token_type')->nullable(true);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
