@@ -46,37 +46,6 @@ class GetAccessToken
     }
 
     /**
-     * Mint and store a new user_token
-     *
-     * @return string
-     */
-    private function mintUserToken($request) {
-        $options = [
-            'query' => [
-                'client_id' => env('EBAY_CLIENT_ID'),
-                'redirect_uri' => env('EBAY_RUNAME'),
-                'response_type' => 'code',
-                'state' => 'jadepython',
-                'scope' => 'https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.inventory',
-                'prompt' => 'login'
-            ]
-        ];
-
-        try {
-            $response = $this->client->get('https://auth.sandbox.ebay.com/oauth2/authorize', $options);
-            print_r($response->getBody()->getContents());
-            $token = json_decode($response->getBody()->getContents());
-
-            $minted_token = $this->saveUserTokenToDB($token);
-            $this->saveUserTokenToSession($request, $minted_token);
-
-        } catch (RequestException $e) {
-            print_r(json_decode($e->getResponse()->getBody()->getContents()));
-            die();
-        }
-    }
-
-    /**
      * Saves or updates a token to the DB
      *
      * @return void
@@ -176,6 +145,37 @@ class GetAccessToken
         } else {
             // Mint a new user token
             $this->mintUserToken($request);
+        }
+    }
+
+    /**
+     * Mint and store a new user_token
+     *
+     * @return string
+     */
+    private function mintUserToken($request) {
+        $options = [
+            'query' => [
+                'client_id' => env('EBAY_CLIENT_ID'),
+                'redirect_uri' => env('EBAY_RUNAME'),
+                'response_type' => 'code',
+                'state' => 'jadepython',
+                'scope' => 'https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.inventory',
+                'prompt' => 'login'
+            ]
+        ];
+
+        try {
+            $response = $this->client->get('https://auth.sandbox.ebay.com/oauth2/authorize', $options);
+            print_r($response->getBody()->getContents());
+            $token = json_decode($response->getBody()->getContents());
+
+            $minted_token = $this->saveUserTokenToDB($token);
+            $this->saveUserTokenToSession($request, $minted_token);
+
+        } catch (RequestException $e) {
+            print_r(json_decode($e->getResponse()->getBody()->getContents()));
+            die();
         }
     }
 
