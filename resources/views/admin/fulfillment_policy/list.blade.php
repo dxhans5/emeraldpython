@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if($policies->total > 0)
+                @if($policies && $policies->total > 0)
                     @foreach($policies->fulfillmentPolicies as $policy)
                         <tr>
                             <th scope='row'>{{ $policy }}</th>

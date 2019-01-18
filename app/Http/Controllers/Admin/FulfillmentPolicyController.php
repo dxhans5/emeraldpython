@@ -42,6 +42,7 @@ class FulfillmentPolicyController extends Controller
             //'debug' => true
         ];
         $policies = [];
+
         try {
             $response = $this->client->get($uri, $options);
             $policies = json_decode($response->getBody()->getContents());

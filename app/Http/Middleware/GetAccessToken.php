@@ -54,9 +54,10 @@ class GetAccessToken
         if ($request->session()->has('client_token_expires_at')) {
             $client_token_expires_at = $request->session()->get('client_token_expires_at');
             $this->checkClientTokenExpiration($client_token_expires_at);
-        } elseif($config = Config::first()) {
-            $client_token_expires_at = $config->client_token_expires_at;
+        } elseif($token = Config::first()) {
+            $client_token_expires_at = $token->client_token_expires_at;
             $this->checkClientTokenExpiration($client_token_expires_at);
+            $this->saveClientTokenToSession($request, $token);
         } else {
             // Mint a new client token
             $this->mintClientToken($request);
@@ -64,9 +65,9 @@ class GetAccessToken
     }
 
     /**
-     * Checkes when the client token expires
+     * Checks when the client token expires
      *
-     * @return void
+     * @return boolean
      */
     private function checkClientTokenExpiration($client_token_expires_at) {
         $seconds_until_client_token_expires = Carbon::parse($client_token_expires_at)->diffInSeconds(Carbon::now());
@@ -104,17 +105,6 @@ class GetAccessToken
     }
 
     /**
-     * Saves or updates a token to the session
-     *
-     * @return void
-     */
-    private function saveClientTokenToSession($request, $token) {
-        // Store token in the session
-        $request->session()->put('client_token', $token->client_token);
-        $request->session()->put('client_token_expires_at', $token->expires_at);
-    }
-
-    /**
      * Saves or updates a token to the DB
      *
      * @return void
@@ -133,6 +123,17 @@ class GetAccessToken
     }
 
     /**
+     * Saves or updates a token to the session
+     *
+     * @return void
+     */
+    private function saveClientTokenToSession($request, $token) {
+        // Store token in the session
+        $request->session()->put('client_token', $token->client_token);
+        $request->session()->put('client_token_expires_at', $token->expires_at);
+    }
+
+    /**
      * Validate the user token
      *
      * @return void
@@ -141,9 +142,10 @@ class GetAccessToken
         if ($request->session()->has('user_token_expires_at')) {
             $user_token_expires_at = $request->session()->get('user_token_expires_at');
             $this->checkUserTokenExpiration($user_token_expires_at);
-        } elseif($config = Config::first()) {
-            $user_token_expires_at = $config->user_token_expires_at;
+        } elseif($token = Config::first()) {
+            $user_token_expires_at = $token->user_token_expires_at;
             $this->checkUserTokenExpiration($user_token_expires_at);
+            $this->saveUserTokenToSession($request, $token);
         } else {
             // Mint a new user token
             $this->mintUserToken($request);
@@ -189,5 +191,16 @@ class GetAccessToken
             echo('Something bad happened when trying to mintUserToken');
             die();
         }
+    }
+
+    /**
+     * Saves or updates a token to the session
+     *
+     * @return void
+     */
+    private function saveUserTokenToSession($request, $token) {
+        // Store token in the session
+        $request->session()->put('user_token', $token->user_token);
+        $request->session()->put('user_token_expires_at', $token->user_token_expires_at);
     }
 }
