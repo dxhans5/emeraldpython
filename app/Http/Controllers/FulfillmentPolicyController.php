@@ -9,8 +9,6 @@ use GuzzleHttp\Exception\RequestException;
 
 class FulfillmentPolicyController extends Controller
 {
-
-    private $RESOURCE_URI = 'https://api.ebay.com/sell/account/v1/fulfillment_policy/';
     private $client;
     private $headers;
 
@@ -24,7 +22,7 @@ class FulfillmentPolicyController extends Controller
 
         // Setup the Guzzle client
         $this->client = new Client(
-            ['base_uri' => $this->RESOURCE_URI]
+            ['base_uri' => env('EBAY_DOMAIN') . '/sell/account/v1/fulfillment_policy/']
         );
     }
 

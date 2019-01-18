@@ -46,25 +46,6 @@ class GetAccessToken
     }
 
     /**
-     * Validate the user token
-     *
-     * @return void
-     */
-    private function validateUserToken($request) {
-        if ($request->session()->has('user_token_expires_at')) {
-            $user_token_expires_at = $request->session()->get('user_token_expires_at');
-            $seconds_until_user_token_expires = Carbon::parse($user_token_expires_at)->diffInSeconds(Carbon::now());
-
-            if($seconds_until_user_token_expires <= 1800) { // If expires in 30min or less
-                $this->mintUserToken($request);
-            }
-        } else {
-            // Mint a new user token
-            $this->mintUserToken($request);
-        }
-    }
-
-    /**
      * Mint and store a new user_token
      *
      * @return string
@@ -80,10 +61,6 @@ class GetAccessToken
                 'prompt' => 'login'
             ]
         ];
-
-
-
-        //print_r($options); die();
 
         try {
             $response = $this->client->get('https://auth.sandbox.ebay.com/oauth2/authorize', $options);
@@ -181,6 +158,25 @@ class GetAccessToken
         $config->save();
 
         return $config;
+    }
+
+    /**
+     * Validate the user token
+     *
+     * @return void
+     */
+    private function validateUserToken($request) {
+        if ($request->session()->has('user_token_expires_at')) {
+            $user_token_expires_at = $request->session()->get('user_token_expires_at');
+            $seconds_until_user_token_expires = Carbon::parse($user_token_expires_at)->diffInSeconds(Carbon::now());
+
+            if($seconds_until_user_token_expires <= 1800) { // If expires in 30min or less
+                $this->mintUserToken($request);
+            }
+        } else {
+            // Mint a new user token
+            $this->mintUserToken($request);
+        }
     }
 
     /**

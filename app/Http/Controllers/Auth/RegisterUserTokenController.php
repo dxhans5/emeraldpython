@@ -39,7 +39,7 @@ class RegisterUserTokenController extends Controller
                 ]
             ];
 
-            $response = $this->client->post('https://api.sandbox.ebay.com/identity/v1/oauth2/token', $options);
+            $response = $this->client->post(env('EBAY_DOMAIN') . '/identity/v1/oauth2/token', $options);
             $token = json_decode($response->getBody()->getContents());
 
             $minted_token = $this->saveUserTokenToDB($token);
