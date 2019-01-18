@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
@@ -57,9 +58,8 @@ class FulfillmentPolicyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('admin.fulfillment_policy.create');
     }
 
     /**
@@ -70,7 +70,30 @@ class FulfillmentPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r('here?'); die();
+        $options = [
+            'headers' => [
+                'Authorization' => 'Bearer ' . session('user_token'),
+                'form_params' => [
+                    'categoryTypes' => [
+                        'default' => 'boolean',
+                        'name' => 'CategoryTypeEnum'
+                    ],
+                ]
+            ],
+            //'debug' => true
+        ];
+
+        print_r($options); die();
+
+        try {
+            $response = $this->client->post($uri, $options);
+            $policies = json_decode($response->getBody()->getContents());
+        } catch (RequestException $e) {
+            $response = json_decode($e->getResponse()->getBody()->getContents());
+            $request->session()->flash('errors', $response);
+        }
+        die();
     }
 
     /**

@@ -19,5 +19,5 @@ Route::group(['middleware' => 'no.ssl'], function () {
     Route::get('admin/', 'Admin\DashboardController');
     Route::get('register-user-token', 'Auth\RegisterUserTokenController@register');
 
-    Route::resource('admin/account/fulfillment-policy', 'FulfillmentPolicyController');
+    Route::resource('admin/account/fulfillment-policy', 'Admin\FulfillmentPolicyController');
 });
