@@ -71,7 +71,6 @@ class FulfillmentPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        print_r('here?'); die();
         $options = [
             'headers' => [
                 'Authorization' => 'Bearer ' . session('user_token'),

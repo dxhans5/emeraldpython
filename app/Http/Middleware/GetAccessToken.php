@@ -53,10 +53,10 @@ class GetAccessToken
     private function validateClientToken($request) {
         if ($request->session()->has('client_token_expires_at')) {
             $client_token_expires_at = $request->session()->get('client_token_expires_at');
-            $this->checkClientTokenExpiration($client_token_expires_at);
+            $this->checkClientTokenExpiration($client_token_expires_at, $request);
         } elseif($token = Config::first()) {
             $client_token_expires_at = $token->client_token_expires_at;
-            $this->checkClientTokenExpiration($client_token_expires_at);
+            $this->checkClientTokenExpiration($client_token_expires_at, $request);
             $this->saveClientTokenToSession($request, $token);
         } else {
             // Mint a new client token
@@ -69,7 +69,7 @@ class GetAccessToken
      *
      * @return boolean
      */
-    private function checkClientTokenExpiration($client_token_expires_at) {
+    private function checkClientTokenExpiration($client_token_expires_at, $request) {
         $seconds_until_client_token_expires = Carbon::parse($client_token_expires_at)->diffInSeconds(Carbon::now());
 
         if($seconds_until_client_token_expires <= 1800) { // If expires in 30min or less
@@ -141,10 +141,10 @@ class GetAccessToken
     private function validateUserToken($request) {
         if ($request->session()->has('user_token_expires_at')) {
             $user_token_expires_at = $request->session()->get('user_token_expires_at');
-            $this->checkUserTokenExpiration($user_token_expires_at);
+            $this->checkUserTokenExpiration($user_token_expires_at, $request);
         } elseif($token = Config::first()) {
             $user_token_expires_at = $token->user_token_expires_at;
-            $this->checkUserTokenExpiration($user_token_expires_at);
+            $this->checkUserTokenExpiration($user_token_expires_at, $request);
             $this->saveUserTokenToSession($request, $token);
         } else {
             // Mint a new user token
@@ -153,11 +153,11 @@ class GetAccessToken
     }
 
     /**
-     * Checkes when the user token expires
+     * Checks when the user token expires
      *
      * @return void
      */
-    private function checkUserTokenExpiration($user_token_expires_at) {
+    private function checkUserTokenExpiration($user_token_expires_at, $request) {
         $seconds_until_user_token_expires = Carbon::parse($user_token_expires_at)->diffInSeconds(Carbon::now());
 
         if($seconds_until_user_token_expires <= 1800) { // If expires in 30min or less
