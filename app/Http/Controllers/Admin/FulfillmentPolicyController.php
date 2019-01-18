@@ -76,9 +76,13 @@ class FulfillmentPolicyController extends Controller
                 'Authorization' => 'Bearer ' . session('user_token'),
                 'form_params' => [
                     'categoryTypes' => [
-                        'default' => 'boolean',
-                        'name' => 'CategoryTypeEnum'
+                        'default' => 'true',
+                        'name' => 'ALL_EXCLUDING_MOTORS_VEHICLES'
                     ],
+                    'description' => $request->input('description'),
+                    'freightShipping' => $request->input('freightShipping'),
+                    'globalShipping' => $request->input('globalShipping'),
+                    'name' => $request->input('name'),
                 ]
             ],
             //'debug' => true
