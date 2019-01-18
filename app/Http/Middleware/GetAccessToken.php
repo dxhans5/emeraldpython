@@ -46,23 +46,14 @@ class GetAccessToken
     }
 
     /**
-     * Saves or updates a token to the DB
-     *
-     * @return void
-     */
-    private function saveUserTokenToDB($token) {
-        print_r("Here?" . $token); die();
-    }
-
-    /**
      * Saves or updates a token to the session
      *
      * @return void
      */
     private function saveClientTokenToSession($request, $token) {
         // Store token in the session
-        //$request->session()->put('user_token', $token->client_token);
-        //$request->session()->put('user_token_expires_at', $token->expires_at);
+        $request->session()->put('client_token', $token->client_token);
+        $request->session()->put('client_token_expires_at', $token->expires_at);
     }
 
     /**
@@ -167,26 +158,12 @@ class GetAccessToken
 
         try {
             $response = $this->client->get('https://auth.sandbox.ebay.com/oauth2/authorize', $options);
-            print_r($response->getBody()->getContents());
-            $token = json_decode($response->getBody()->getContents());
-
-            $minted_token = $this->saveUserTokenToDB($token);
-            $this->saveUserTokenToSession($request, $minted_token);
+            echo $response->getBody()->getContents();
+            die();
 
         } catch (RequestException $e) {
             print_r(json_decode($e->getResponse()->getBody()->getContents()));
             die();
         }
-    }
-
-    /**
-     * Saves or updates a token to the session
-     *
-     * @return void
-     */
-    private function saveUserTokenToSession($request, $token) {
-        // Store token in the session
-        $request->session()->put('client_token', $token->client_token);
-        $request->session()->put('client_token_expires_at', $token->expires_at);
     }
 }
