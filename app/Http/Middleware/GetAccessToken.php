@@ -46,17 +46,6 @@ class GetAccessToken
     }
 
     /**
-     * Saves or updates a token to the session
-     *
-     * @return void
-     */
-    private function saveClientTokenToSession($request, $token) {
-        // Store token in the session
-        $request->session()->put('client_token', $token->client_token);
-        $request->session()->put('client_token_expires_at', $token->expires_at);
-    }
-
-    /**
      * Validate the client token
      *
      * @return void
@@ -64,13 +53,25 @@ class GetAccessToken
     private function validateClientToken($request) {
         if ($request->session()->has('client_token_expires_at')) {
             $client_token_expires_at = $request->session()->get('client_token_expires_at');
-            $seconds_until_client_token_expires = Carbon::parse($client_token_expires_at)->diffInSeconds(Carbon::now());
-
-            if($seconds_until_client_token_expires <= 1800) { // If expires in 30min or less
-                $this->mintClientToken($request);
-            }
+            $this->checkClientTokenExpiration($client_token_expires_at);
+        } elseif($config = Config::first()) {
+            $client_token_expires_at = $config->client_token_expires_at;
+            $this->checkClientTokenExpiration($client_token_expires_at);
         } else {
             // Mint a new client token
+            $this->mintClientToken($request);
+        }
+    }
+
+    /**
+     * Checkes when the client token expires
+     *
+     * @return void
+     */
+    private function checkClientTokenExpiration($client_token_expires_at) {
+        $seconds_until_client_token_expires = Carbon::parse($client_token_expires_at)->diffInSeconds(Carbon::now());
+
+        if($seconds_until_client_token_expires <= 1800) { // If expires in 30min or less
             $this->mintClientToken($request);
         }
     }
@@ -103,6 +104,17 @@ class GetAccessToken
     }
 
     /**
+     * Saves or updates a token to the session
+     *
+     * @return void
+     */
+    private function saveClientTokenToSession($request, $token) {
+        // Store token in the session
+        $request->session()->put('client_token', $token->client_token);
+        $request->session()->put('client_token_expires_at', $token->expires_at);
+    }
+
+    /**
      * Saves or updates a token to the DB
      *
      * @return void
@@ -128,13 +140,25 @@ class GetAccessToken
     private function validateUserToken($request) {
         if ($request->session()->has('user_token_expires_at')) {
             $user_token_expires_at = $request->session()->get('user_token_expires_at');
-            $seconds_until_user_token_expires = Carbon::parse($user_token_expires_at)->diffInSeconds(Carbon::now());
-
-            if($seconds_until_user_token_expires <= 1800) { // If expires in 30min or less
-                $this->mintUserToken($request);
-            }
+            $this->checkUserTokenExpiration($user_token_expires_at);
+        } elseif($config = Config::first()) {
+            $user_token_expires_at = $config->user_token_expires_at;
+            $this->checkUserTokenExpiration($user_token_expires_at);
         } else {
             // Mint a new user token
+            $this->mintUserToken($request);
+        }
+    }
+
+    /**
+     * Checkes when the user token expires
+     *
+     * @return void
+     */
+    private function checkUserTokenExpiration($user_token_expires_at) {
+        $seconds_until_user_token_expires = Carbon::parse($user_token_expires_at)->diffInSeconds(Carbon::now());
+
+        if($seconds_until_user_token_expires <= 1800) { // If expires in 30min or less
             $this->mintUserToken($request);
         }
     }
