@@ -97,7 +97,7 @@ class GetAccessToken
             $this->saveClientTokenToSession($request, $minted_token);
 
         } catch (RequestException $e) {
-            print_r(json_decode($e->getResponse()->getBody()->getContents()));
+            echo('Something bad happened while trying to mintClientToken');
             die();
         }
     }
@@ -162,7 +162,7 @@ class GetAccessToken
             die();
 
         } catch (RequestException $e) {
-            print_r(json_decode($e->getResponse()->getBody()->getContents()));
+            echo('Something bad happened when trying to mintUserToken');
             die();
         }
     }

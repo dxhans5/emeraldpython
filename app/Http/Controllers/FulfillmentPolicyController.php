@@ -38,11 +38,12 @@ class FulfillmentPolicyController extends Controller
             'headers' => [
                 'Authorization' => 'Bearer ' . session('user_token')
             ],
-            'debug' => true
+            //'debug' => true
         ];
         $policies = [];
         try {
-            $policies = $this->client->get($uri, $options);
+            $response = $this->client->get($uri, $options);
+            $policies = json_decode($response->getBody()->getContents());
         } catch (RequestException $e) {
             $response = json_decode($e->getResponse()->getBody()->getContents());
             $request->session()->flash('errors', $response);

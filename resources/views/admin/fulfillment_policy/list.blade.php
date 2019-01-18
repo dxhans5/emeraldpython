@@ -8,12 +8,12 @@
         </tr>
     </thead>
     <tbody>
-        @if(sizeof($policies) > 0)
-            @for ($i = 0; $i < sizeof($policies); $i++)
+        @if($policies->total > 0)
+            @foreach($policies->fulfillmentPolicies as $policy)
                 <tr>
-                    <th scope='row'>{{ $policies[$i] }}</th>
+                    <th scope='row'>{{ $policy }}</th>
                 </tr>
-            @endfor
+            @endforeach
         @else
             <tr>
                 <th scope='row'>There are no policies to show at this time.</th>
