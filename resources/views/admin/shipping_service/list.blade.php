@@ -6,7 +6,7 @@
         <h1>Shipping Service</h1>
     </div>
     <div class='col-sm-6 text-right'>
-        <a href='{{ url("admin/account/shipping-service/create") }}'><button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add Shipping Service</button></a>
+        <a href='{{ url("admin/logistics/shipping-service/create") }}'><button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add Shipping Service</button></a>
     </div>
 </div>
 <div class='row mt-2'>

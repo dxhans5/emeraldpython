@@ -26,7 +26,7 @@ class ShippingServiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.shipping_service.create');
     }
 
     /**
@@ -37,7 +37,8 @@ class ShippingServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($request->all());
+        die();
     }
 
     /**
