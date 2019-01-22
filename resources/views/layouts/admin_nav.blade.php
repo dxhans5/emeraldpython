@@ -63,6 +63,7 @@
                     <div class='collapse mt-1' id='logistics-dropdown'>
                         <ul>
                             <li><a href='{{ url("admin/logistics/shipping-quote") }}'>Shipping Quote</a></li>
+                            <li><a href='{{ url("admin/logistics/shipping-service") }}'>Shipping Services</a></li>
                             <li><a href='{{ url("admin/logistics/shipment") }}'>Shipment</a></li>
                         </ul>
                     </div>
