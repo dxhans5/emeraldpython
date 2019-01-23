@@ -51,13 +51,15 @@ class GeteBayFeatures extends Command
                  . '</eBayAuthToken>
                 </ebl:RequesterCredentials>
             </soap:Header>
-            <GeteBayDetailsRequest xmlns="urn:ebay:apis:eBLBaseComponents">
-                <DetailName>ShippingServiceDetails</DetailName>
-                <ErrorLanguage>en_US</ErrorLanguage>
-                <MessageID>ShippingServiceDetails_PugVenturesLLC</MessageID>
-                <Version>1085</Version>
-                <WarningLevel>High</WarningLevel>
-            </GeteBayDetailsRequest>
+            <soap:Body>
+                <GeteBayDetailsRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+                    <DetailName>ShippingServiceDetails</DetailName>
+                    <ErrorLanguage>en_US</ErrorLanguage>
+                    <MessageID>ShippingServiceDetails_PugVenturesLLC</MessageID>
+                    <Version>1085</Version>
+                    <WarningLevel>High</WarningLevel>
+                </GeteBayDetailsRequest>
+            </soap:Body>
         </soap:Envelope>';
 
         $result = $this->makesoaprequest($url, $data);
