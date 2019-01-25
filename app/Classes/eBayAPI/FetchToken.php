@@ -2,42 +2,23 @@
 
 namespace App\Classes\eBayAPI;
 
-use Illuminate\Http\Request;;
+use Illuminate\Support\Facades\Session;
 use App\Classes\eBayAPI\eBaySession;
 
-class GetSessionID
+class FetchToken
 {
-    private $RuName;
-    private $ErrorLanguage;
-    private $MessageID;
-    private $Version;
-    private $WarningLevel;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->RuName = env("EBAY_RUNAME");
-        $this->ErrorLanguage = 'en_US';
-        $this->MessageID = 'PUGeBay_GetSessionID';
-        $this->Version = '1085';
-        $this->WarningLevel = 'High';
-    }
-
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle(Request $request)
+    public function handle()
     {
         $requestXmlBody = "<?xml version='1.0' encoding='utf-8' ?>";
-        $requestXmlBody .= "<GetSessionIDRequest  xmlns='urn:ebay:apis:eBLBaseComponents'>";
+        $requestXmlBody .= "<FetchTokenRequest xmlns='urn:ebay:apis:eBLBaseComponents'>";
         $requestXmlBody .= "<!-- Call-specific Input Fields -->";
-        $requestXmlBody .= "<RuName>$this->RuName</RuName>";
+        $requestXmlBody .= "<SessionID> string </SessionID>";
+
         $requestXmlBody .= "<!-- Standard Input Fields -->";
         $requestXmlBody .= "<ErrorLanguage>$this->ErrorLanguage</ErrorLanguage>";
         $requestXmlBody .= "<MessageID>$this->MessageID</MessageID>";
@@ -50,11 +31,7 @@ class GetSessionID
         
         $responseDoc = new \DomDocument();
         $responseDoc->loadXML($responseXml);
-        $sessionID = $responseDoc->getElementsByTagName('SessionID')->item(0)->nodeValue;
 
-        // Store the id in the Laravel session to be retrieved during the token fetch
-        session(['sessionID' => $sessionID]);
-
-        return $sessionID;
+        return $responseDoc->getElementsByTagName('SessionID')->item(0)->nodeValue;
     }
 }

@@ -45,6 +45,11 @@ class AuthController extends Controller
         return Redirect::to('/login');
     }
 
+    public function registerToken() {
+        Token::accept();
+        die();
+    }
+
     /*
      *      authenticate
      *      Authenticates a user with their email and password.

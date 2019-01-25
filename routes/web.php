@@ -18,4 +18,6 @@ Route::group(['middleware' => 'no.ssl'], function () {
 
     Route::get('', 'DashboardController');
     Route::get('dashboard/', 'DashboardController');
+
+    Route::get('register-user-token', 'AuthController@registerToken');
 });

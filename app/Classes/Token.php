@@ -3,7 +3,9 @@
 namespace App\Classes;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Facades\App\Classes\eBayAPI\GetSessionID;
+use Facades\App\Classes\eBayAPI\FetchToken;
 
 class Token {
 
@@ -39,6 +41,11 @@ class Token {
         return true;
     }
 
+    public function accept() {
+        $token = FetchToken::handle();
+        print_r($token); die();
+    }
+
     private function validateClientToken(Request $request) {
         $session = $request->session();
         // Client token does not exist in session OR expires within 30min
@@ -46,7 +53,7 @@ class Token {
             print_r($session->get('client_token')); die();
         } else {
             // Mint a new client token
-            $this->mintClientToken();
+            $this->mintClientToken($request);
         }
     }
 
@@ -55,10 +62,12 @@ class Token {
             // Mint a new user token
     }
 
-    private function mintClientToken() {
-        $sessionID = GetSessionID::handle();
-        $this->signinURL .= urlencode($sessionID);
-        print_r($this->signinURL); die();
+    private function mintClientToken(Request $request) {
+        $sessionID = GetSessionID::handle($request);
+        $this->signinURL .= $sessionID;
+
+        echo Redirect::away($this->signinURL);
+        die();
         // Accept incoming request at the AcceptURL
         // Request token using the session ID
         // Store newly minted token in the DB and session

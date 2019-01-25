@@ -20,8 +20,9 @@ class ConfigTable extends Migration
             $table->string('client_token_type');
             $table->text('user_token')->nullable()->default(null);
             $table->string('user_token_expires_at')->nullable()->default(null);
-            $table->string('user_refresh_token')->nullable(true);
-            $table->string('user_token_type')->nullable(true);
+            $table->string('user_refresh_token')->nullable(true)->default(null);
+            $table->string('user_token_type')->nullable(true)->default(null);
+            $table->string('temp_session_id')->nullable(true)->default(null);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
