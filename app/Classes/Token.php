@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Facades\App\Classes\eBayAPI\GetSessionID;
 use Facades\App\Classes\eBayAPI\FetchToken;
+use Facades\App\Models\Config;
 
 class Token {
 
     private $signinURL;
     private $RUName;
+    private $config;
 
     public function __construct() {
         // Construct the signinURL
@@ -23,54 +25,49 @@ class Token {
         }
 
         $this->signinURL .= 'RUName=' . env('EBAY_RUNAME') . '&SessID=';
+        $this->config = Config::getFirst();
     }
 
     /*
      *      validate
      *      Forwards the validation request to the appropriate method
      */
-    public function validate(String $tokenType, Request $request) {
-        if($tokenType == 'client') {
-            $this->validateClientToken($request);
+    public function validate(Request $request) {
+        $session = $request->session();
+        // Client token does not exist in session OR expires within 30min
+        if($session->has('user_token')) {
+            print_r('good to go here');
+            print_r($session->get('user_token')); die();
+        } else {
+            // Mint a new token
+            $this->mintToken($request);
         }
 
-        if($tokenType == 'user') {
-            $this->validateUserToken();
-        }
+        return false;
+    }
+
+    public function accept(Request $request) {
+        $token = FetchToken::handle();
+        $userToken = $token['user_token'];
+        $tokenExpiration = $token['user_token_expires_at'];
+
+        // save the token and expiration date
+        $this->config->user_token = $userToken;
+        $this->config->user_token_expires_at = $tokenExpiration;
+        $this->config->save();
+
+        // add the token to the session
+        $request->session()->put(['user_token' => $userToken, 'user_token_expires_at' => $tokenExpiration]);
 
         return true;
     }
 
-    public function accept() {
-        $token = FetchToken::handle();
-        print_r($token); die();
-    }
-
-    private function validateClientToken(Request $request) {
-        $session = $request->session();
-        // Client token does not exist in session OR expires within 30min
-        if($session->has('client_token')) {
-            print_r($session->get('client_token')); die();
-        } else {
-            // Mint a new client token
-            $this->mintClientToken($request);
-        }
-    }
-
-    private function validateUserToken() {
-        // User token does not exist in session OR expires within 30min
-            // Mint a new user token
-    }
-
-    private function mintClientToken(Request $request) {
+    private function mintToken(Request $request) {
         $sessionID = GetSessionID::handle($request);
         $this->signinURL .= $sessionID;
 
         echo Redirect::away($this->signinURL);
-        die();
-        // Accept incoming request at the AcceptURL
-        // Request token using the session ID
-        // Store newly minted token in the DB and session
+        die(); // This will redirect away to eBay login page
     }
 
 }

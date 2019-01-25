@@ -4,9 +4,13 @@ namespace App\Classes\eBayAPI;
 
 use Illuminate\Support\Facades\Session;
 use App\Classes\eBayAPI\eBaySession;
+use Facades\App\Models\Config;
 
 class FetchToken extends eBayAPI
 {
+
+    private $config;
+    private $sessionID;
 
     /**
      * Constructor
@@ -16,6 +20,9 @@ class FetchToken extends eBayAPI
     public function __construct()
     {
         parent::__construct();
+
+        $this->config = Config::getFirst();
+        $this->sessionID = $this->config->temp_session_id;
     }
 
     /**
@@ -28,7 +35,7 @@ class FetchToken extends eBayAPI
         $requestXmlBody = "<?xml version='1.0' encoding='utf-8' ?>";
         $requestXmlBody .= "<FetchTokenRequest xmlns='urn:ebay:apis:eBLBaseComponents'>";
         $requestXmlBody .= "<!-- Call-specific Input Fields -->";
-        $requestXmlBody .= "<SessionID> string </SessionID>";
+        $requestXmlBody .= "<SessionID>$this->sessionID</SessionID>";
 
         $requestXmlBody .= "<!-- Standard Input Fields -->";
         $requestXmlBody .= "<ErrorLanguage>$this->ErrorLanguage</ErrorLanguage>";
@@ -47,6 +54,9 @@ class FetchToken extends eBayAPI
         $errors = $responseDoc->getElementsByTagName('Errors');
         $this->displayErrors($errors);
 
-        return $responseDoc->getElementsByTagName('SessionID')->item(0)->nodeValue;
+        $eBayAuthToken = $responseDoc->getElementsByTagName('eBayAuthToken')->item(0)->nodeValue;
+        $HardExpirationTime = $responseDoc->getElementsByTagName('HardExpirationTime')->item(0)->nodeValue;
+
+        return ['user_token' => $eBayAuthToken, 'user_token_expires_at' => $HardExpirationTime];
     }
 }

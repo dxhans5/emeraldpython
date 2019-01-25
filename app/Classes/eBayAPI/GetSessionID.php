@@ -56,8 +56,9 @@ class GetSessionID extends eBayAPI
 
         $sessionID = $responseDoc->getElementsByTagName('SessionID')->item(0)->nodeValue;
 
-        // Store the id in the Laravel session to be retrieved during the token fetch
-        session(['sessionID' => $sessionID]);
+        // Store the id to be retrieved during the token fetch
+        $this->config->temp_session_id = $sessionID;
+        $this->config->save();
 
         return $sessionID;
     }

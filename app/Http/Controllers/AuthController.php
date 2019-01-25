@@ -12,6 +12,8 @@ class AuthController extends Controller
 {
 
     public function login(Request $request) {
+        $session = $request->session();
+
         if($request->isMethod('post')) {
             // POST
             $email = $this->sanitize($request->get('email'));
@@ -19,17 +21,18 @@ class AuthController extends Controller
             $authenticated = $this->authenticate($email, $password);
 
             if($authenticated) {
-                Token::validate('client', $request);
-                // User Token
-
-                // Login user
-                // Redirect to dashboard
+                Token::validate($request);
+                print_r($request->session()->all()); die();
             }
 
             // TODO: Add a flash with errors.
             return Redirect::to('/login');
         } else {
             // GET
+            if($request->session()->get('user_token')) {
+                print_r($this)
+            }
+
             return view('auth.login');
         }
     }
@@ -45,9 +48,15 @@ class AuthController extends Controller
         return Redirect::to('/login');
     }
 
-    public function registerToken() {
-        Token::accept();
-        die();
+    /*
+     *      registerToken
+     *      Calls into the Token object to register the newly minted token
+     */
+    public function registerToken(Request $request) {
+        Token::accept($request);
+
+        // Send back to the login page to finish the authentication process
+        return Redirect::to('/login');
     }
 
     /*

@@ -12,8 +12,9 @@ class Config extends Model
      * @var string
      */
     protected $table = 'config';
+    protected $fillable = ['id'];
 
     public function getFirst() {
-        return $this->first();
+        return $this->firstOrNew(['id' => 1]);
     }
 }
