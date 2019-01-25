@@ -2,16 +2,15 @@
 
 namespace App\Classes\eBayAPI;
 
-use Illuminate\Http\Request;;
+use Illuminate\Http\Request;
+use App\Classes\eBayAPI\eBayAPI;
 use App\Classes\eBayAPI\eBaySession;
+use Facades\App\Models\Config;
 
-class GetSessionID
+class GetSessionID extends eBayAPI
 {
     private $RuName;
-    private $ErrorLanguage;
-    private $MessageID;
-    private $Version;
-    private $WarningLevel;
+    private $config;
 
     /**
      * Create a new command instance.
@@ -20,11 +19,11 @@ class GetSessionID
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->RuName = env("EBAY_RUNAME");
-        $this->ErrorLanguage = 'en_US';
-        $this->MessageID = 'PUGeBay_GetSessionID';
-        $this->Version = '1085';
-        $this->WarningLevel = 'High';
+
+        $this->config = Config::getFirst();
     }
 
     /**
@@ -47,9 +46,14 @@ class GetSessionID
 
         $session = new eBaySession(null, env('EBAY_DEV_ID'), env('EBAY_CLIENT_ID'), env('EBAY_SECRET'), env('EBAY_XML_DOMAIN'), 1085, 0, 'GetSessionID');
         $responseXml = $session->sendHttpRequest($requestXmlBody);
-        
+
         $responseDoc = new \DomDocument();
         $responseDoc->loadXML($responseXml);
+
+        //get any error nodes
+        $errors = $responseDoc->getElementsByTagName('Errors');
+        $this->displayErrors($errors);
+
         $sessionID = $responseDoc->getElementsByTagName('SessionID')->item(0)->nodeValue;
 
         // Store the id in the Laravel session to be retrieved during the token fetch

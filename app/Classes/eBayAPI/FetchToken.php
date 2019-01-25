@@ -5,8 +5,19 @@ namespace App\Classes\eBayAPI;
 use Illuminate\Support\Facades\Session;
 use App\Classes\eBayAPI\eBaySession;
 
-class FetchToken
+class FetchToken extends eBayAPI
 {
+
+    /**
+     * Constructor
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      *
@@ -24,13 +35,17 @@ class FetchToken
         $requestXmlBody .= "<MessageID>$this->MessageID</MessageID>";
         $requestXmlBody .= "<Version>$this->Version</Version>";
         $requestXmlBody .= "<WarningLevel>$this->WarningLevel</WarningLevel>";
-        $requestXmlBody .= "</GetSessionIDRequest >";
+        $requestXmlBody .= "</FetchTokenRequest >";
 
-        $session = new eBaySession(null, env('EBAY_DEV_ID'), env('EBAY_CLIENT_ID'), env('EBAY_SECRET'), env('EBAY_XML_DOMAIN'), 1085, 0, 'GetSessionID');
+        $session = new eBaySession(null, env('EBAY_DEV_ID'), env('EBAY_CLIENT_ID'), env('EBAY_SECRET'), env('EBAY_XML_DOMAIN'), 1085, 0, 'FetchToken');
         $responseXml = $session->sendHttpRequest($requestXmlBody);
-        
+
         $responseDoc = new \DomDocument();
         $responseDoc->loadXML($responseXml);
+
+        //get any error nodes
+        $errors = $responseDoc->getElementsByTagName('Errors');
+        $this->displayErrors($errors);
 
         return $responseDoc->getElementsByTagName('SessionID')->item(0)->nodeValue;
     }
