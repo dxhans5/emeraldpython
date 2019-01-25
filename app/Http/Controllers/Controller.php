@@ -10,4 +10,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /*
+     *      sanitize
+     *      Sanitizes user input
+     */
+    protected function sanitize($input) {
+        return filter_var($input, FILTER_SANITIZE_STRING);
+    }
 }
