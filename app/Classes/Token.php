@@ -34,10 +34,9 @@ class Token {
      */
     public function validate(Request $request) {
         $session = $request->session();
-        // Client token does not exist in session OR expires within 30min
-        if($session->has('user_token')) {
-            print_r('good to go here');
-            print_r($session->get('user_token')); die();
+
+        if($session->has('user_token') || !empty(Config::getFirst())) {
+            return true;
         } else {
             // Mint a new token
             $this->mintToken($request);

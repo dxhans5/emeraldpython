@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -20,19 +21,13 @@ class AuthController extends Controller
             $password = $this->sanitize($request->get('password'));
             $authenticated = $this->authenticate($email, $password);
 
-            if($authenticated) {
-                Token::validate($request);
-                print_r($request->session()->all()); die();
+            if($authenticated && Token::validate($request)) {
+                return Redirect::to('/dashboard');
             }
 
             // TODO: Add a flash with errors.
             return Redirect::to('/login');
         } else {
-            // GET
-            if($request->session()->get('user_token')) {
-                print_r($this)
-            }
-
             return view('auth.login');
         }
     }
