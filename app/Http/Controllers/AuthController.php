@@ -32,7 +32,7 @@ class AuthController extends Controller
         }
     }
 
-    /*
+    /* 
      *      logout
      *      Logs out a user, and flushes the users session.
      *      Redirects to the login screen.
