@@ -15,9 +15,6 @@ class ConfigTable extends Migration
     {
         Schema::create('config', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('client_token')->nullable()->default(null);
-            $table->string('client_token_expires_at')->nullable()->default(null);
-            $table->string('client_token_type')->nullable()->default(null);
             $table->text('user_token')->nullable()->default(null);
             $table->string('user_token_expires_at')->nullable()->default(null);
             $table->string('user_refresh_token')->nullable(true)->default(null);

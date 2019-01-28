@@ -4,6 +4,7 @@
             <h5>EMERALD<span class='blue'>python</span></h5>
             <ul class='mt-4'>
                 <li><a href='{{ url("dashboard/") }}'><i class="fas fa-columns"></i> Dashboard</a></li>
+                <li><a href='{{ url("listings/") }}'><i class="fas fa-columns"></i> Listings</a></li>
             </ul>
         </div>
     </div>

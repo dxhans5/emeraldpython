@@ -105,7 +105,7 @@ class eBaySession
 			//SiteID must also be set in the Request's XML
 			//SiteID = 0  (US) - UK = 3, Canada = 2, Australia = 15, ....
 			//SiteID Indicates the eBay site to associate the call with
-			'X-EBAY-API-SITEID: ' . $this->siteID,
+            'X-EBAY-API-SITEID: ' . $this->siteID,
 		);
 
 		return $headers;

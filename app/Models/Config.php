@@ -15,6 +15,13 @@ class Config extends Model
     protected $fillable = ['id'];
 
     public function getFirst() {
-        return $this->firstOrNew(['id' => 1]);
+        $record = $this->first();
+
+        if(empty($record)) {
+            $this->id = 1;
+            $record = $this->save();
+        }
+
+        return $record;
     }
 }

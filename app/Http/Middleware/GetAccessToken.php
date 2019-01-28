@@ -2,6 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
+use Illuminate\Http\Request;
+use Facades\App\Models\Config;
+
 class GetAccessToken
 {
     /**
@@ -13,13 +17,9 @@ class GetAccessToken
      */
     public function handle(Request $request, Closure $next)
     {
-        $this->validateClientToken($request);
-        $this->validateUserToken($request);
+        $config = Config::getFirst();
+        //print_r($config); die();
 
         return $next($request);
-    }
-
-    private function validateClientToken(Request $request) {
-        print_r('here');
     }
 }

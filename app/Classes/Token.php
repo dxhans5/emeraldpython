@@ -34,8 +34,9 @@ class Token {
      */
     public function validate(Request $request) {
         $session = $request->session();
+        $config = Config::getFirst();
 
-        if($session->has('user_token') || !empty(Config::getFirst())) {
+        if($session->has('user_token') || !empty($config->user_token)) {
             return true;
         } else {
             // Mint a new token

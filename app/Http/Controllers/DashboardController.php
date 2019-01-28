@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Facades\App\Classes\eBayAPI\GetMyeBaySelling;
 
 class DashboardController extends Controller
 {
@@ -13,15 +12,13 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('access.token');
     }
 
     /**
      * Invokes the dashboard template
      */
-    public function __invoke() {
-        $listings = GetMyeBaySelling::handle();
-
-        print_r($listings); die();
+    public function __invoke(Request $request) {
         return view('dashboard');
     }
 }

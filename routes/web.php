@@ -11,13 +11,12 @@
 |
 */
 
-Route::group(['middleware' => 'no.ssl'], function () {
     Auth::routes(['register' => false]);
     Route::match(array('GET', 'POST'), 'login/', 'AuthController@login')->name('login');
     Route::get('logout/', 'AuthController@logout')->name('logout');
 
     Route::get('', 'DashboardController');
     Route::get('dashboard/', 'DashboardController');
+    Route::get('listings/', 'ListingsController@listings');
 
     Route::get('register-user-token', 'AuthController@registerToken');
-});
