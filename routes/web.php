@@ -17,6 +17,9 @@
 
     Route::get('', 'DashboardController');
     Route::get('dashboard/', 'DashboardController');
+
     Route::get('listings/', 'ListingsController@listings');
+    Route::get('listings/create', 'ListingsController@create');
+    Route::post('listings/create', 'ListingsController@save');
 
     Route::get('register-user-token', 'AuthController@registerToken');
