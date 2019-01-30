@@ -13,11 +13,16 @@ class HomeDepot extends Parser {
      */
     public function __construct(String $url)
     {
-        $scrape = $this->scrape($url);
-        $scrape->filter('.price__dollars')->each(function ($node) {
-            print_r($node);
+        $data = $this->scrape($url);
+        $data->filter('.product-title__title')->each(function($node){
+            $this->title = $node->text();
         });
+        $this->description = $data->filter('.main_description')->text();
 
-        die();
+
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+        ];
     }
 }

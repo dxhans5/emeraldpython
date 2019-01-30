@@ -49,7 +49,7 @@ class Token {
     public function accept(Request $request) {
         $token = FetchToken::handle();
         $userToken = $token['user_token'];
-        $tokenExpiration = $token['user_token_expires_at'];
+        $tokenExpiration = $token['user_token_expires_at']; // TODO: Convert this to a carbon timestamp
 
         // save the token and expiration date
         $this->config->user_token = $userToken;

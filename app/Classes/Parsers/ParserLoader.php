@@ -17,7 +17,7 @@ class ParserLoader {
                 return Redirect::back();
         }
 
-        print_r($scraper); die();
+        return $scraper;
 
     }
 }
