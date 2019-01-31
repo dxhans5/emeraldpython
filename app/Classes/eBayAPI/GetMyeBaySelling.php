@@ -86,6 +86,7 @@ class GetMyeBaySelling extends eBayAPI
 
         //get any error nodes
         $errors = $responseDoc->getElementsByTagName('Errors');
+        $this->displayErrors($errors);
 
         $activeList = $responseDoc->getElementsByTagName('ActiveList');
         $deletedFromSoldList = $responseDoc->getElementsByTagName('DeletedFromSoldList');

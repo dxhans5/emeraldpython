@@ -6,6 +6,7 @@ use Closure;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Facades\App\Models\Config;
+use Facades\App\Classes\Token;
 
 class GetAccessToken
 {
@@ -18,15 +19,8 @@ class GetAccessToken
      */
     public function handle(Request $request, Closure $next)
     {
-        $config = Config::getFirst();
-        if ($config->user_token) {
-            $start_time = Carbon::now();
-            $end_time = $config->user_token_expires_at;
-
-        } else {
-            Token::validate($request);
+        if(Token::validate($request)) {
+            return $next($request);
         }
-
-        return $next($request);
     }
 }

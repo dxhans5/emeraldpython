@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Facades\App\Classes\eBayAPI\GetMyeBaySelling;
 use Facades\App\Classes\eBayAPI\GetCategorySpecifics;
+use Facades\App\Classes\eBayAPI\GetSuggestedCategories;
 use Facades\App\Classes\Parsers\ParserLoader;
 use Facades\App\Models\Parser;
 
@@ -78,9 +79,12 @@ class ListingsController extends Controller
         $this->listing->Description = $this->clean($productScrape->description);
         $this->listing->DispatchTimeMax = $this->dispatch_max_time;
         $this->listing->IncludeRecommendations = $this->include_recommendations;
-        $this->listing->ItemSpecifics = GetCategorySpecifics::handle($request);
 
         $this->listing->title = $this->clean($productScrape->title);
+
+        $categorySuggestions = $this->getCategorySuggestions($request, $this->listing->title);
+        print_r($categorySuggestions); die();
+        //$this->listing->ItemSpecifics = GetCategorySpecifics::handle($request);
 
         echo('<pre>');
         print_r($this->listing);
@@ -90,6 +94,35 @@ class ListingsController extends Controller
         return $this->listing;
     }
 
+    private function getCategorySuggestions($request, String $title) {
+        $query = $this->formatForCategorySuggestions($title);
+
+        $categorySuggestions = GetSuggestedCategories::handle($request, $query);
+        print_r($categorySuggestions); die();
+    }
+
+    /*
+     *      formatForCategorySuggestions
+     *      Formats the title to remove all unneccesary items used for category suggestions
+     */
+    private function formatForCategorySuggestions(String $title) {
+        $removePhrases = [
+            'in.'
+        ];
+        $query = preg_replace("/[0-9]+/", "", $title);
+        $query = preg_replace("/(^| ).( |$)/", "", $query);
+
+        foreach($removePhrases as $phrase) {
+            $query = preg_replace("/$phrase/", "", $query);
+        }
+
+        return $query;
+    }
+
+    /*
+     *      clean
+     *      Cleans the input by trimming and removing extra whitespace
+     */
     private function clean(String $string) {
         $string = trim($string);
         $string =  preg_replace('/\s+/', ' ', $string);
