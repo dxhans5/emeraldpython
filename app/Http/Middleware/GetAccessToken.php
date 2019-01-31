@@ -23,7 +23,6 @@ class GetAccessToken
             $start_time = Carbon::now();
             $end_time = $config->user_token_expires_at;
 
-            print_r($start_time . " ==== " . Carbon::createFromTimestamp($end_time)); die();
         } else {
             Token::validate($request);
         }

@@ -53,7 +53,7 @@ class Token {
 
         // save the token and expiration date
         $this->config->user_token = $userToken;
-        $this->config->user_token_expires_at = $tokenExpiration;
+        $this->config->user_token_expires_at = $this->convertToNormalTime($tokenExpiration);
         $this->config->save();
 
         // add the token to the session
@@ -68,6 +68,15 @@ class Token {
 
         echo Redirect::away($this->signinURL);
         die(); // This will redirect away to eBay login page
+    }
+
+    private function convertToNormalTime(String $timestamp) {
+        $explodedTimestamp = explode(' ', preg_replace('/[\.T]/', ' ', $timestamp));
+        $date = $explodedTimestamp[0];
+        $time = $explodedTimestamp[1];
+        $zone = $explodedTimestamp[2];
+
+        return $date . ' ' . $time;
     }
 
 }
