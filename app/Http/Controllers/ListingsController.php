@@ -95,11 +95,12 @@ class ListingsController extends Controller
         $this->listing->Location = $this->item_location;
         $this->listing->PaymentMethods = $this->payment_methods;
         $this->listing->PayPalEmailAddress = $this->paypal_email_address;
+        $this->listing->PictureDetails = $this->getPictureDetails($productScrape);
 
 
 
         $this->listing->TODO = new \stdClass();
-        $this->listing->TODO->ItemSpecifics = GetCategorySpecifics::handle($request);
+        $this->listing->TODO->ItemSpecifics = GetCategorySpecifics::handle($request, $this->listing->CategorySuggestions, $productScrape);
 
         echo('<pre>');
         print_r($this->listing);
@@ -107,6 +108,15 @@ class ListingsController extends Controller
         die();
 
         return $this->listing;
+    }
+
+    /*
+     *      getPictureDetails
+     *      Creates the picture details for a listing
+     */
+    private function getPictureDetails($scrape) {
+        print_r($scrape);
+        die();
     }
 
     /*

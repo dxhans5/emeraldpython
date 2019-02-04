@@ -18,11 +18,20 @@ class HomeDepot extends Parser {
             $this->title = $node->text();
         });
         $this->description = $data->filter('.main_description')->text();
+        $this->brand = $data->filter('.product-title__brand .bttn__content')->text();
+
+        $thumbnails = $data->filter('.media__thumbnail > img')->each(function($node){
+            $src = $node->attr('src');
+            var_dump($src);
+        });
+
+        die();
 
 
         return [
             'title' => $this->title,
             'description' => $this->description,
+            'brand' => $this->brand,
         ];
     }
 }

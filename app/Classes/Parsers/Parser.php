@@ -9,6 +9,7 @@ class Parser {
     // Required data
     public $title;
     public $description;
+    public $brand;
 
     protected function scrape($url) {
         $client = new Client();
