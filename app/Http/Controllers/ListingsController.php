@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Facades\App\Classes\eBayAPI\GetMyeBaySelling;
 use Facades\App\Classes\eBayAPI\GetCategorySpecifics;
 use Facades\App\Classes\eBayAPI\GetSuggestedCategories;
+use Facades\App\Classes\eBayAPI\GetCategoryFeatures;
 use Facades\App\Classes\Parsers\ParserLoader;
 use Facades\App\Models\Parser;
 
@@ -17,12 +18,17 @@ use App\Classes\Parsers\HomeDepot;
 class ListingsController extends Controller
 {
     private $listing;
+    private $listing_type = 'FixedPriceItem';
+    private $listing_duration = 31; // 31 Days
     private $autopay = true;
     private $condition_id = 1000; // New w/ Tags
     private $country = 'US';
     private $currency = 'USD';
+    private $item_location = 'Boise, ID USA';
     private $dispatch_max_time = 1; // One Day
     private $include_recommendations = true;
+    private $payment_methods = ['PayPal'];
+    private $paypal_email_address = 'info@the-vaping-pug.com';
 
     /**
      * Constructor...limits access to authenticated users
@@ -70,6 +76,7 @@ class ListingsController extends Controller
 
     private function createListing($parser, String $url, Request $request) {
         $productScrape = ParserLoader::loadAndScrape($parser, $url);
+
         $this->listing = new \stdClass();
         $this->listing->ApplicationData = (string)Str::uuid();
         $this->listing->AutoPay = $this->autopay;
@@ -82,9 +89,17 @@ class ListingsController extends Controller
 
         $this->listing->title = $this->clean($productScrape->title);
 
-        $categorySuggestions = $this->getCategorySuggestions($request, $this->listing->title);
-        print_r($categorySuggestions); die();
-        //$this->listing->ItemSpecifics = GetCategorySpecifics::handle($request);
+        $this->listing->CategorySuggestions = $this->getCategorySuggestions($request, $this->listing->title);
+        $this->listing->ListingDuration = $this->listing_duration;
+        $this->listing->ListingType = $this->listing_type;
+        $this->listing->Location = $this->item_location;
+        $this->listing->PaymentMethods = $this->payment_methods;
+        $this->listing->PayPalEmailAddress = $this->paypal_email_address;
+
+
+
+        $this->listing->TODO = new \stdClass();
+        $this->listing->TODO->ItemSpecifics = GetCategorySpecifics::handle($request);
 
         echo('<pre>');
         print_r($this->listing);
@@ -94,11 +109,14 @@ class ListingsController extends Controller
         return $this->listing;
     }
 
+    /*
+     *      getCategorySuggestions
+     *      Returns the suggestions for a given category
+     */
     private function getCategorySuggestions($request, String $title) {
         $query = $this->formatForCategorySuggestions($title);
 
-        $categorySuggestions = GetSuggestedCategories::handle($request, $query);
-        print_r($categorySuggestions); die();
+        return GetSuggestedCategories::handle($request, $query);
     }
 
     /*

@@ -19,6 +19,8 @@ class GetSuggestedCategories extends eBayAPI
     }
 
     public function handle($request, String $query) {
+        $suggestionPath = [];
+
         $user_token = $request->session()->get('user_token');
 
         $requestXmlBody = "<?xml version='1.0' encoding='utf-8' ?>";
@@ -42,9 +44,21 @@ class GetSuggestedCategories extends eBayAPI
         $session = new eBaySession(env('PROD_KEY'), env('EBAY_DEV_ID_PROD'), env('EBAY_CLIENT_ID_PROD'), env('EBAY_SECRET_PROD'), env('EBAY_XML_DOMAIN_PROD'), 1085, 0, 'GetSuggestedCategories');
         $responseXml = $session->sendHttpRequest($requestXmlBody);
 
-        print_r($responseXml); die();
+        $xml = \simplexml_load_string($responseXml);
+        $suggestion = $xml->SuggestedCategoryArray->SuggestedCategory[0]->Category; // First suggestion (filtered by % High to Low)
 
-        return ['category_count' => $categoryCount->item(0)->nodeValue];
+        // Create parent path
+        for ($i = 0; $i < sizeof($suggestion->CategoryParentID); $i++) {
+            $parentID = $suggestion->CategoryParentID[$i]->__toString();
+            $parentName = $suggestion->CategoryParentName[$i]->__toString();
+
+            $suggestionPath[$parentID] = $parentName;
+        }
+
+        // Add current item to path
+        $suggestionPath[$suggestion->CategoryID->__toString()] = $suggestion->CategoryName->__toString();
+
+        return $suggestionPath;
 
     }
 
