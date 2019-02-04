@@ -44,3 +44,75 @@ _ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src
 [Child 11004, [GPU 20264, Chrome_
 ###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
 
+1549316995343	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\DONALD~1\\AppData\\Local\\Temp\\rust_mozprofile.slzQiZeqywfb"
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+1549316997052	Marionette	INFO	Listening on port 60978
+1549316997533	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 29792, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 29792, Chrome_ChildThre[Parent 28188, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+[GPU 2464, Chrome_Chil
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1549317335425	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\DONALD~1\\AppData\\Local\\Temp\\rust_mozprofile.beaWwvqEtvaI"
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+1549317336969	Marionette	INFO	Listening on port 61998
+1549317337089	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+[Parent 11348, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 23160, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 23160, [Parent 11348, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 11348, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 27128, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 27128, Chrome_ChildThread] WARNIN[Parent 11348, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 22968, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 22968, Chrom*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+nction
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+[Parent 22076, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 22076, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 30880, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 30880, Chrome_ChildThread] WARNING: pipe error: 1[Child 30596, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 22076, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 28264, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 28264, Chrome_Chil*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1549317511450	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\DONALD~1\\AppData\\Local\\Temp\\rust_mozprofile.iUa2OndOhcZr"
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\donaldhansen\AppData\Local\openvr\openvrpaths.vrpath
+1549317512969	Marionette	INFO	Listening on port 62883
+1549317513109	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+JavaScript error: https://www.homedepot.com/p/smart/js/vendor.532e418a848f93f0af1f.js, line 26: TypeError: (intermediate value).apply is not a function
+[Parent 31692, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 28916, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 28916, Chrome_Chi[Child 23324, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 23324, Chrome_ChildThread] [Parent 31692, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 15124, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 15124, Chrome_ChildThr*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+[GPU 3132
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+

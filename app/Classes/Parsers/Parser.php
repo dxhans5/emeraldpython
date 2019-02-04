@@ -2,8 +2,6 @@
 
 namespace App\Classes\Parsers;
 
-use Goutte\Client;
-
 class Parser {
 
     // Required data
@@ -12,7 +10,15 @@ class Parser {
     public $brand;
 
     protected function scrape($url) {
-        $client = new Client();
-        return $client->request('GET', $url);
+        switch($parser->parser) {
+            case 'HomeDepot':
+                $data = passthru("python HomeDepot.py $url");
+                break;
+            default:
+                $request->session()->put('error', 'No parsers created for: ' . $host);
+                return Redirect::back();
+        }
+
+        print_r($data);
     }
 }

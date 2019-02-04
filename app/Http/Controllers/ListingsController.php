@@ -77,6 +77,8 @@ class ListingsController extends Controller
     private function createListing($parser, String $url, Request $request) {
         $productScrape = ParserLoader::loadAndScrape($parser, $url);
 
+        print_r($productScrape); die();
+
         $this->listing = new \stdClass();
         $this->listing->ApplicationData = (string)Str::uuid();
         $this->listing->AutoPay = $this->autopay;
