@@ -1,18 +1,23 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from bs4 import BeautifulSoup
-import re
-import pandas as pd
-import os
+#!/usr/bin/env python
+
 import sys
-import json
+
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from bs4 import BeautifulSoup
+
 import SoupXPath
 
 # launch url
 URL = sys.argv[1]
 
 # create a new Firefox session
-DRIVER = webdriver.Firefox()
+cap = DesiredCapabilities().FIREFOX
+cap["marionette"] = False
+
+DRIVER = webdriver.Firefox(
+    capabilities=cap, executable_path="/usr/bin/geckodriver"
+)
 DRIVER.implicitly_wait(30)
 DRIVER.get(URL)
 
@@ -36,43 +41,19 @@ DRIVER.find_element_by_xpath(
     "//*[@id='thumbnails']/a[1]").click()
 SOUP2 = BeautifulSoup(DRIVER.page_source, 'lxml')
 imgs = []
-xcount = 1
+
 for overlayThumb in SOUP2.findAll("a", {"class": "overlayThumbnail"}):
     if overlayThumb['data-media_type'] == "IMAGE":
-        # Click the individual thumbs to bring up the main image popup
-        # /html/body/div[15]/div/div[2]/div[2]/div/a[1]
-        # /html/body/div[16]/div/div[2]/div[2]/div/a[1]
-
-        # CSSPath to the media viewer:
-        # html body.smart.desktop.appliance div#mediaOverlay.mediaPlayer
-        # Unfortunately, the div ID seems to be different on every item
-        # so XPath won't work to this point, however, everything past this
-        # point seems to follow the same pattern of: /div/div[2]/div[2]/div/a[...]
+        # Get the individual xpath for each of the valid thumbnails
         xpath = SoupXPath.xpath_soup(overlayThumb)
-        print(xpath)
+        # Click on the individual thumbnail
+        DRIVER.find_element_by_xpath(xpath).click()
+        # Rescan the source to get the updated main image
+        SOUP3 = BeautifulSoup(DRIVER.page_source, 'lxml')
 
-        # DRIVER.find_element_by_xpath(
-        #    "/html/body/div[25]/div/div[2]/div[2]/div/a[" + str(xcount) + "]").click()
-        # img_element = SOUP2.select("#overlay-zoom-image")
-        # imgs.append(img_element[0]['src'])
+        img_element = SOUP3.select("#overlay-zoom-image")
+        imgs.append(img_element[0]['src'])
 
-#xcount = 1
-# for imgLink in imgLinks:
-#    if imgLink['data-media_type'] == "IMAGE":
-#        # Click the individual thumbs to bring up the main image popup
-#        DRIVER.find_element_by_xpath(
-#            "//*[@id='thumbnails']/a[" + str(xcount) + "]").click()
-#
-#        SOUP2 = BeautifulSoup(DRIVER.page_source, 'lxml')
-#        img_element = SOUP2.select("#overlay-zoom-image")
-#        imgs.append(img_element[0]['src'])
-#
-#        # Close the popup
-#        DRIVER.find_element_by_xpath("//*[@id='overlay-close']").click()
-#
-#    xcount = xcount + 1
-
-# end the Selenium browser session
 DRIVER.quit()
 
 data = {}

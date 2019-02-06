@@ -79,36 +79,6 @@ class ListingsController extends Controller
 
         print_r($productScrape); die();
 
-        $this->listing = new \stdClass();
-        $this->listing->ApplicationData = (string)Str::uuid();
-        $this->listing->AutoPay = $this->autopay;
-        $this->listing->ConditionID = $this->condition_id;
-        $this->listing->Country = $this->country;
-        $this->listing->Currency = $this->currency;
-        $this->listing->Description = $this->clean($productScrape->description);
-        $this->listing->DispatchTimeMax = $this->dispatch_max_time;
-        $this->listing->IncludeRecommendations = $this->include_recommendations;
-
-        $this->listing->title = $this->clean($productScrape->title);
-
-        $this->listing->CategorySuggestions = $this->getCategorySuggestions($request, $this->listing->title);
-        $this->listing->ListingDuration = $this->listing_duration;
-        $this->listing->ListingType = $this->listing_type;
-        $this->listing->Location = $this->item_location;
-        $this->listing->PaymentMethods = $this->payment_methods;
-        $this->listing->PayPalEmailAddress = $this->paypal_email_address;
-        $this->listing->PictureDetails = $this->getPictureDetails($productScrape);
-
-
-
-        $this->listing->TODO = new \stdClass();
-        $this->listing->TODO->ItemSpecifics = GetCategorySpecifics::handle($request, $this->listing->CategorySuggestions, $productScrape);
-
-        echo('<pre>');
-        print_r($this->listing);
-        echo('</pre>');
-        die();
-
         return $this->listing;
     }
 
