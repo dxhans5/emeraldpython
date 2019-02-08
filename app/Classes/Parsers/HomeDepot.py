@@ -4,6 +4,7 @@ import sys
 
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from pyvirtualdisplay import Display
 from bs4 import BeautifulSoup
 
 import SoupXPath
@@ -12,12 +13,10 @@ import SoupXPath
 URL = sys.argv[1]
 
 # create a new Firefox session
-cap = DesiredCapabilities().FIREFOX
-cap["marionette"] = False
+display = Display(visible=0, size=(1024, 768))
+display.start()
 
-DRIVER = webdriver.Firefox(
-    capabilities=cap, executable_path="/usr/bin/geckodriver"
-)
+DRIVER = webdriver.Firefox()
 DRIVER.implicitly_wait(30)
 DRIVER.get(URL)
 
