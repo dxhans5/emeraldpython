@@ -1,20 +1,13 @@
 #!/usr/bin/env python
 
 import sys
+import SoupXPath
 
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from pyvirtualdisplay import Display
 from bs4 import BeautifulSoup
-
-import SoupXPath
 
 # launch url
 URL = sys.argv[1]
-
-# create a new Firefox session
-display = Display(visible=0, size=(1024, 768))
-display.start()
 
 DRIVER = webdriver.Firefox()
 DRIVER.implicitly_wait(30)
