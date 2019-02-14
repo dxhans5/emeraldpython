@@ -27,6 +27,16 @@ sudo apt-get install -y chromium-browser
 sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb
 
+sudo wget -N http://chromedriver.storage.googleapis.com/2.26/chromedriver_linux64.zip
+sudo unzip chromedriver_linux64.zip
+sudo chmod +x chromedriver
+
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+
 ## Setup the database
 cd /vagrant/
 php artisan migrate --seed
+
+## https://chromedriver.storage.googleapis.com/73.0.3683.20/chromedriver_linux64.zip

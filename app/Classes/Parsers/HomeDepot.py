@@ -9,7 +9,8 @@ from bs4 import BeautifulSoup
 # launch url
 URL = sys.argv[1]
 
-DRIVER = webdriver.Firefox()
+# DRIVER = webdriver.Firefox()
+DRIVER = webdriver.Chrome('/usr/bin/chromium-browser')
 DRIVER.implicitly_wait(30)
 DRIVER.get(URL)
 
