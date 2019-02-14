@@ -4,13 +4,16 @@ import sys
 import SoupXPath
 
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup
 
 # launch url
 URL = sys.argv[1]
 
-# DRIVER = webdriver.Firefox()
-DRIVER = webdriver.Chrome('/usr/bin/chromium-browser')
+options = Options()
+options.headless = True
+DRIVER = webdriver.Firefox(options=options)
+
 DRIVER.implicitly_wait(30)
 DRIVER.get(URL)
 
