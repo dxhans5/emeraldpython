@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Facades\App\Classes\eBayAPI\GetMyeBaySelling;
 use Facades\App\Classes\eBayAPI\GetCategorySpecifics;
-use Facades\App\Classes\eBayAPI\GetSuggestedCategories;
 use Facades\App\Classes\eBayAPI\GetCategoryFeatures;
+use Facades\App\Classes\eBayAPI\AddFixedPriceItem;
 use Facades\App\Classes\Parsers\ParserLoader;
 use Facades\App\Models\Parser;
 
@@ -17,19 +17,6 @@ use App\Classes\Parsers\HomeDepot;
 
 class ListingsController extends Controller
 {
-    private $listing;
-    private $listing_type = 'FixedPriceItem';
-    private $listing_duration = 31; // 31 Days
-    private $autopay = true;
-    private $condition_id = 1000; // New w/ Tags
-    private $country = 'US';
-    private $currency = 'USD';
-    private $item_location = 'Boise, ID USA';
-    private $dispatch_max_time = 1; // One Day
-    private $include_recommendations = true;
-    private $payment_methods = ['PayPal'];
-    private $paypal_email_address = 'info@the-vaping-pug.com';
-
     /**
      * Constructor...limits access to authenticated users
      */
@@ -76,10 +63,7 @@ class ListingsController extends Controller
 
     private function createListing($parser, String $url, Request $request) {
         $productScrape = ParserLoader::loadAndScrape($parser, $url);
-
-        print_r($productScrape); die();
-
-        return $this->listing;
+        return AddFixedPriceItem::handle($request, $productScrape);
     }
 
     /*
@@ -89,34 +73,6 @@ class ListingsController extends Controller
     private function getPictureDetails($scrape) {
         print_r($scrape);
         die();
-    }
-
-    /*
-     *      getCategorySuggestions
-     *      Returns the suggestions for a given category
-     */
-    private function getCategorySuggestions($request, String $title) {
-        $query = $this->formatForCategorySuggestions($title);
-
-        return GetSuggestedCategories::handle($request, $query);
-    }
-
-    /*
-     *      formatForCategorySuggestions
-     *      Formats the title to remove all unneccesary items used for category suggestions
-     */
-    private function formatForCategorySuggestions(String $title) {
-        $removePhrases = [
-            'in.'
-        ];
-        $query = preg_replace("/[0-9]+/", "", $title);
-        $query = preg_replace("/(^| ).( |$)/", "", $query);
-
-        foreach($removePhrases as $phrase) {
-            $query = preg_replace("/$phrase/", "", $query);
-        }
-
-        return $query;
     }
 
     /*

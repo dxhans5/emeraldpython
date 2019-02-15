@@ -2,6 +2,7 @@
 
 import sys
 import SoupXPath
+import json
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -55,4 +56,4 @@ data['brand'] = brand[0].text
 data['price'] = dollars[0].text + "." + cents[0].text
 data['images'] = imgs
 
-print(data)
+print(json.dumps(data))

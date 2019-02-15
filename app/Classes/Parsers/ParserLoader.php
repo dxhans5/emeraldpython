@@ -11,7 +11,7 @@ class ParserLoader {
     public function loadAndScrape(Parser $parser, String $parsedUrl) {
         switch($parser->parser) {
             case 'HomeDepot':
-                $command = "sudo python /vagrant/app/Classes/Parsers/HomeDepot.py $parsedUrl";
+                $command = "python /vagrant/app/Classes/Parsers/HomeDepot.py $parsedUrl";
                 break;
             default:
                 $request->session()->put('error', 'No parsers created for: ' . $host);
@@ -26,9 +26,6 @@ class ParserLoader {
             throw new ProcessFailedException($process);
         }
 
-        print_r($process->getOutput());
-
-
-        die();
+        return $process->getOutput();
     }
 }
