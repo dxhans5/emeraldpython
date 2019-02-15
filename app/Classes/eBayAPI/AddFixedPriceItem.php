@@ -22,6 +22,7 @@ class AddFixedPriceItem extends eBayAPI
     private $payment_methods = ['PayPal'];
     private $paypal_email_address = 'info@the-vaping-pug.com';
     private $site_id = 0; // US
+    private $free_shipping = true;
 
     /**
      * Constructor
@@ -64,8 +65,17 @@ class AddFixedPriceItem extends eBayAPI
         $requestXmlBody .= "<CategoryID>$primary_category_id</CategoryID>";
         $requestXmlBody .="</PrimaryCategory>";
 
+        // Condition
+        $requestXmlBody .= "<ConditionID>$this->condition_id</ConditionID>";
+
         // Price
         $requestXmlBody .= "<StartPrice>" . floatval($product->price). "</StartPrice>";
+
+        // Shipping
+        $requestXmlBody .= "<ShippingServiceOptions>";
+        $requestXmlBody .= "<FreeShipping>$this->free_shipping</FreeShipping>";
+        $requestXmlBody .= "<ShippingService></ShippingService>";
+        $requestXmlBody .= "</ShippingServiceOptions>";
 
         $requestXmlBody .= "</Item>";
 

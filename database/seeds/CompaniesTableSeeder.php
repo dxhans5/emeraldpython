@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class ParsersTableSeeder extends Seeder
+class CompaniesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,11 +12,10 @@ class ParsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('parsers')->insert(
+        DB::table('companies')->insert(
             [
-                'host' => 'www.homedepot.com',
-                'parser' => 'HomeDepot',
-                'company_id' => 1, // Home Depot
+                'name' => 'Home Depot',
+                'shipping_options' => '{}',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
