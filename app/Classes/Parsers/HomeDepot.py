@@ -10,10 +10,7 @@ from bs4 import BeautifulSoup
 # launch url
 URL = sys.argv[1]
 
-options = Options()
-options.headless = True
-DRIVER = webdriver.Firefox(options=options)
-
+DRIVER = webdriver.PhantomJS()
 DRIVER.implicitly_wait(30)
 DRIVER.get(URL)
 
