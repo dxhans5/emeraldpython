@@ -23,6 +23,12 @@ class AddFixedPriceItem extends eBayAPI
     private $paypal_email_address = 'info@the-vaping-pug.com';
     private $site_id = 0; // US
     private $free_shipping = true;
+    /* The following options need to go away if we ever offer options for shipping */
+    private $shipping_service_priority = 1;
+    private $shipping_service = 'USPSPriority';
+    private $shipping_service_cost = 0.00;
+    private $shipping_service_additional_cost = 0.00;
+    /*   */
 
     /**
      * Constructor
@@ -72,10 +78,15 @@ class AddFixedPriceItem extends eBayAPI
         $requestXmlBody .= "<StartPrice>" . floatval($product->price). "</StartPrice>";
 
         // Shipping
+        $requestXmlBody .= "<ShippingDetails>";
         $requestXmlBody .= "<ShippingServiceOptions>";
+        $requestXmlBody .= "<ShippingServicePriority>$this->shipping_service_priority</ShippingServicePriority>";
         $requestXmlBody .= "<FreeShipping>$this->free_shipping</FreeShipping>";
-        $requestXmlBody .= "<ShippingService></ShippingService>";
+        $requestXmlBody .= "<ShippingService>$this->shipping_service</ShippingService>";
+        $requestXmlBody .= "<ShippingServiceCost currencyID='$this->currency'>$this-> </ShippingServiceCost>";
+        $requestXmlBody .= "<ShippingService>$this->shipping_service</ShippingService>";
         $requestXmlBody .= "</ShippingServiceOptions>";
+        $requestXmlBody .= "</ShippingDetails>";
 
         $requestXmlBody .= "</Item>";
 

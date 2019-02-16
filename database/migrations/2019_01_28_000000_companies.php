@@ -16,7 +16,7 @@ class Companies extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name');
-            $table->json('shipping_options')->default('{}');
+            $table->json('shipping_options');
             $table->timestamp('created_at')->nullable()->default(null);
             $table->timestamp('updated_at')->nullable()->default(null);
         });
