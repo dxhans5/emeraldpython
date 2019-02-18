@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class ProductController extends Controller
 {
     /**
      * Constructor...limits access to authenticated users
@@ -15,9 +15,10 @@ class DashboardController extends Controller
     }
 
     /**
-     * Invokes the dashboard template
+     * Invokes the product list
      */
-    public function __invoke(Request $request) {
-        return view('dashboard');
+    public function list(Request $request) {
+        $products = [];
+        return view('products.listings', ['products' => $products]);
     }
 }

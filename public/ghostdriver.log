@@ -1,25 +1,5 @@
-[INFO  - 2019-02-16T02:13:55.877Z] GhostDriver - Main - running on port 52615
-[INFO  - 2019-02-16T02:13:56.827Z] Session [83d31050-3190-11e9-820c-01b19aae1e03] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
-[INFO  - 2019-02-16T02:13:56.827Z] Session [83d31050-3190-11e9-820c-01b19aae1e03] - page.customHeaders:  - {}
-[INFO  - 2019-02-16T02:13:56.827Z] Session [83d31050-3190-11e9-820c-01b19aae1e03] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
-[INFO  - 2019-02-16T02:13:56.827Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 83d31050-3190-11e9-820c-01b19aae1e03
-[ERROR - 2019-02-16T02:14:01.751Z] Session [83d31050-3190-11e9-820c-01b19aae1e03] - page.onError - msg: TypeError: undefined is not a constructor (evaluating 'new k')
-
-  phantomjs://platform/console++.js:263 in error
-[ERROR - 2019-02-16T02:14:01.752Z] Session [83d31050-3190-11e9-820c-01b19aae1e03] - page.onError - stack:
-  (anonymous function) (https://players.brightcove.net/66036796001/4JE-ofbdg_default/index.min.js:1)
-  (anonymous function) (https://players.brightcove.net/66036796001/4JE-ofbdg_default/index.min.js:1)
-  (anonymous function) (https://players.brightcove.net/66036796001/4JE-ofbdg_default/index.min.js:1)
-  (anonymous function) (https://players.brightcove.net/66036796001/4JE-ofbdg_default/index.min.js:1)
-  (anonymous function) (https://players.brightcove.net/66036796001/4JE-ofbdg_default/index.min.js:1)
-  (anonymous function) (https://players.brightcove.net/66036796001/4JE-ofbdg_default/index.min.js:1)
-
-  phantomjs://platform/console++.js:263 in error
-[ERROR - 2019-02-16T02:14:01.752Z] Session [83d31050-3190-11e9-820c-01b19aae1e03] - page.onError - msg: TypeError: null is not an object (evaluating 'a.setAttribute')
-
-  phantomjs://platform/console++.js:263 in error
-[ERROR - 2019-02-16T02:14:01.753Z] Session [83d31050-3190-11e9-820c-01b19aae1e03] - page.onError - stack:
-  i (https://assets.homedepot-static.com/p/smart/js/0.384c5d337338fd7e7b18.js:1)
-  onload (https://assets.homedepot-static.com/p/smart/js/0.384c5d337338fd7e7b18.js:1)
-
-  phantomjs://platform/console++.js:263 in error
+[INFO  - 2019-02-18T19:16:45.442Z] GhostDriver - Main - running on port 58923
+[INFO  - 2019-02-18T19:16:46.402Z] Session [bbc52c00-33b1-11e9-b605-5723e7fee824] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2019-02-18T19:16:46.403Z] Session [bbc52c00-33b1-11e9-b605-5723e7fee824] - page.customHeaders:  - {}
+[INFO  - 2019-02-18T19:16:46.403Z] Session [bbc52c00-33b1-11e9-b605-5723e7fee824] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2019-02-18T19:16:46.403Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: bbc52c00-33b1-11e9-b605-5723e7fee824

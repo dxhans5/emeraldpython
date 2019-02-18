@@ -16,10 +16,5 @@
     Route::get('logout/', 'AuthController@logout')->name('logout');
 
     Route::get('', 'DashboardController');
-    Route::get('dashboard/', 'DashboardController');
-
-    Route::get('listings/', 'ListingsController@listings');
-    Route::get('listings/create', 'ListingsController@create');
-    Route::post('listings/create', 'ListingsController@save');
-
-    Route::get('register-user-token', 'AuthController@registerToken');
+    Route::get('dashboard/', 'DashboardController')->name('dashboard');
+    Route::get('products/', 'ProductController@list')->name('products');

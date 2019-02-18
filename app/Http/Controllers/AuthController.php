@@ -21,7 +21,7 @@ class AuthController extends Controller
             $password = $this->sanitize($request->get('password'));
             $authenticated = $this->authenticate($email, $password);
 
-            if($authenticated && Token::validate($request)) {
+            if($authenticated) {
                 return Redirect::to('/dashboard');
             }
 
@@ -32,7 +32,7 @@ class AuthController extends Controller
         }
     }
 
-    /* 
+    /*
      *      logout
      *      Logs out a user, and flushes the users session.
      *      Redirects to the login screen.
@@ -40,17 +40,6 @@ class AuthController extends Controller
     public function logout(Request $request) {
         Auth::logout();
         Session::flush();
-        return Redirect::to('/login');
-    }
-
-    /*
-     *      registerToken
-     *      Calls into the Token object to register the newly minted token
-     */
-    public function registerToken(Request $request) {
-        Token::accept($request);
-
-        // Send back to the login page to finish the authentication process
         return Redirect::to('/login');
     }
 
