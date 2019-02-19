@@ -17,4 +17,5 @@
 
     Route::get('', 'DashboardController');
     Route::get('dashboard/', 'DashboardController')->name('dashboard');
+    Route::get('policies/', 'PolicyController@list')->name('policies');
     Route::get('products/', 'ProductController@list')->name('products');

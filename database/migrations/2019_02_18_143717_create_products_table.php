@@ -15,6 +15,18 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->string('bullet_points')->nullable()->default(NULL);
+            $table->string('dimensions')->nullable()->default(NULL);
+            $table->string('weight')->nullable()->default(NULL);
+            $table->string('batteries')->nullable()->default(NULL);
+            $table->string('asin')->nullable()->default(NULL);
+            $table->string('upc')->nullable()->default(NULL);
+            $table->string('model')->nullable()->default(NULL);
+            $table->text('description');
+            $table->integer('warranty_policy_id');
+            $table->integer('shipping_policy_id');
+            $table->integer('return_policy_id');
             $table->timestamps();
         });
     }
