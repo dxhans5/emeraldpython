@@ -9,7 +9,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "fabpot/goutte": "^3.2",
         "orchestra/parser": "~3.0",
-        "symfony/process": "^4.2"
+        "symfony/process": "^4.2",
+        "laravelcollective/html": "^5.7"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

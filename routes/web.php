@@ -16,7 +16,11 @@
     Route::get('logout/', 'AuthController@logout')->name('logout');
 
     Route::get('', 'DashboardController');
-    Route::get('companies/', 'CompanyController@list')->name('companies');
+
+    Route::group(['prefix' => 'companies'], function(){
+        Route::get('/', 'CompanyController@list')->name('companies');
+        Route::get('/add', 'CompanyController@add')->name('companies');
+    });
     Route::get('dashboard/', 'DashboardController')->name('dashboard');
     Route::get('policies/', 'PolicyController@list')->name('policies');
     Route::get('products/', 'ProductController@list')->name('products');
