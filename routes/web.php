@@ -19,7 +19,7 @@
 
     Route::group(['prefix' => 'companies'], function(){
         Route::get('/', 'CompanyController@list')->name('companies');
-        Route::get('/add', 'CompanyController@add')->name('companies');
+        Route::match(array('GET', 'POST'), '/create', 'CompanyController@create')->name('create_company');
     });
     Route::get('dashboard/', 'DashboardController')->name('dashboard');
     Route::get('policies/', 'PolicyController@list')->name('policies');

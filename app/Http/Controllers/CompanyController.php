@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Company;
 
 class CompanyController extends Controller
 {
     /**
      * Constructor...limits access to authenticated users
      */
-    public function __construct()
+    public function __construct(Company $company)
     {
         $this->middleware('auth');
     }
@@ -23,16 +24,15 @@ class CompanyController extends Controller
     }
 
     /**
-     * Invokes the add form
+     * Invokes the create form
      */
-    public function add(Request $request) {
-        return view('companies.add');
-    }
+    public function create(Request $request) {
+        if($request->isMethod('POST')) {
+            // Submit the company to the database
 
-    /**
-     * Inserts the new company into the database
-     */
-    public function save(Request $request) {
-        print_r('here now'); die();
+        } else {
+            // Just show the view for the form
+            return view('companies.create');
+        }
     }
 }
