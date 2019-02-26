@@ -28,11 +28,24 @@ class ProductController extends Controller {
         if($request->isMethod('POST')) {
             $parser = new ParserLoader;
             $company = new Company;
+            $product = new Product;
 
             $company = $company->where('id', $request->get('companyId'))->first();
-            $scrape = $parser->scrape($company->parser, $request->get('url'));
+            $scrape = json_decode($parser->scrape($company->parser, $request->get('url')));
 
-            print_r($scrape); die();
+            $product->title = $scrape->title;
+            $product->bullet_points = null;
+            $product->dimensions = null;
+            $product->weight = null;
+            $product->batteries = null;
+            $product->asin = null;
+            $product->upc = null;
+            $product->model = null;
+            $product->description = null;
+            $product->company = $company;
+            $product->scrape = $scrape;
+
+            return view('products.create_2', ['product' => $product]);
         } else {
             $companies = new Company;
             $companies = $companies->all();
@@ -56,7 +69,7 @@ class ProductController extends Controller {
         if(empty($id)) {
             $product = new Product;
         } else {
-            $product = $this->products->where('id', $id)->first();
+            $product = $product->where('id', $id)->first();
         }
 
         // Get items from the form here

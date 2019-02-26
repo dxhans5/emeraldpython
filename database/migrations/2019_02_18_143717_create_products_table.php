@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('upc')->nullable()->default(NULL);
             $table->string('model')->nullable()->default(NULL);
             $table->text('description');
+            $table->integer('company_id');
             $table->integer('warranty_policy_id');
             $table->integer('shipping_policy_id');
             $table->integer('return_policy_id');
