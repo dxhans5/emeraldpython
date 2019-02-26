@@ -48,12 +48,18 @@ for overlayThumb in SOUP2.findAll("a", {"class": "overlayThumbnail"}):
         img_element = SOUP3.select("#overlay-zoom-image")
         imgs.append(img_element[0]['src'])
 
+bullets = []
+for item in SOUP.select('.list__item'):
+    if not item.findChildren('a') and not item.findChildren('img'):
+        bullets.append(item.text)
+
 DRIVER.quit()
 
 data = {}
 data['title'] = title[0].text
 data['brand'] = brand[0].text
 data['price'] = dollars[0].text + "." + cents[0].text
+data['bullets'] = bullets
 data['images'] = imgs
 
 print(json.dumps(data))

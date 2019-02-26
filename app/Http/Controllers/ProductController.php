@@ -33,8 +33,17 @@ class ProductController extends Controller {
             $company = $company->where('id', $request->get('companyId'))->first();
             $scrape = json_decode($parser->scrape($company->parser, $request->get('url')));
 
+            $bulletsMarkup = "";
+            if(!empty($scrape->bullets)) {
+                $bulletsMarkup .= "<ul>";
+                foreach($scrape->bullets as $bullet) {
+                    $bulletsMarkup .= "<li>$bullet</li>";
+                }
+                $bulletsMarkup .= "</ul>";
+            }
+
             $product->title = $scrape->title;
-            $product->bullet_points = null;
+            $product->bullets = $bulletsMarkup;
             $product->dimensions = null;
             $product->weight = null;
             $product->batteries = null;

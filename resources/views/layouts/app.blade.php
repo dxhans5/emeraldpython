@@ -26,6 +26,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <!-- NiceEdit -->
+    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+            bkLib.onDomLoaded(function() { nicEditors.allTextAreas({maxHeight : 300}) });
+        //]]>
+    </script>
+
 </head>
 <body>
     <div class='row p-0 m-0'>
