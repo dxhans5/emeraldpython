@@ -20,6 +20,8 @@
     Route::group(['prefix' => 'companies'], function(){
         Route::get('/', 'CompanyController@list')->name('companies');
         Route::match(array('GET', 'POST'), '/create', 'CompanyController@create')->name('create_company');
+        Route::get('/delete/{id}', 'CompanyController@trash');
+        Route::match(array('GET', 'POST'), '/{id}', 'CompanyController@detail');
     });
     Route::get('dashboard/', 'DashboardController')->name('dashboard');
     Route::get('policies/', 'PolicyController@list')->name('policies');

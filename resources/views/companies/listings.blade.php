@@ -10,14 +10,29 @@
         </div>
     </div>
 
-    <hr/>
-
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if(!empty($companies))
-                @foreach($companies as $company)
-                    {{ $company }}
-                @endforeach
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">URL</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($companies as $company)
+                            <tr>
+                                <th scope="row">{{ $company->id }}</th>
+                                <td><a href="companies/{{ $company->id }}">{{ $company->name }}</a></td>
+                                <td>{{ $company->url }}</td>
+                                <td><a href="companies/delete/{{ $company->id }}"><i class="fas fa-trash red"></i></a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             @else
                 <p>There are no active companies</p>
             @endif
