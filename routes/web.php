@@ -12,17 +12,20 @@
 */
 
     Auth::routes(['register' => false]);
-    Route::match(array('GET', 'POST'), 'login/', 'AuthController@login')->name('login');
-    Route::get('logout/', 'AuthController@logout')->name('logout');
+    Route::match(array('GET', 'POST'), 'login/', 'AuthController@login');
+    Route::get('logout/', 'AuthController@logout');
 
     Route::get('', 'DashboardController');
 
     Route::group(['prefix' => 'companies'], function(){
-        Route::get('/', 'CompanyController@list')->name('companies');
-        Route::match(array('GET', 'POST'), '/create', 'CompanyController@create')->name('create_company');
+        Route::get('/', 'CompanyController@list');
+        Route::match(array('GET', 'POST'), '/create', 'CompanyController@create');
         Route::get('/delete/{id}', 'CompanyController@trash');
         Route::match(array('GET', 'POST'), '/{id}', 'CompanyController@detail');
     });
-    Route::get('dashboard/', 'DashboardController')->name('dashboard');
-    Route::get('policies/', 'PolicyController@list')->name('policies');
-    Route::get('products/', 'ProductController@list')->name('products');
+    Route::get('dashboard/', 'DashboardController');
+    Route::get('policies/', 'PolicyController@list');
+    Route::group(['prefix' => 'products'], function(){
+        Route::get('/', 'ProductController@list');
+        Route::match(array('GET', 'POST'), '/create', 'ProductController@create');
+    });

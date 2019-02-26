@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-4">
         <div class="col-md-6">
             <h3>Companies</h3>
         </div>
@@ -19,6 +19,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">URL</th>
+                        <th scope="col">Parser</th>
                         <th></th>
                         </tr>
                     </thead>
@@ -28,6 +29,7 @@
                                 <th scope="row">{{ $company->id }}</th>
                                 <td><a href="companies/{{ $company->id }}">{{ $company->name }}</a></td>
                                 <td>{{ $company->url }}</td>
+                                <td>{{ $company->parser }}</td>
                                 <td><a href="companies/delete/{{ $company->id }}"><i class="fas fa-trash red"></i></a></td>
                             </tr>
                         @endforeach

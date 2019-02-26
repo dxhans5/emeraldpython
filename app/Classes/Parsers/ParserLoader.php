@@ -8,8 +8,8 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ParserLoader {
-    public function loadAndScrape(Parser $parser, String $parsedUrl) {
-        switch($parser->parser) {
+    public function scrape(String $parser, String $parsedUrl) {
+        switch($parser) {
             case 'HomeDepot':
                 $command = "python /vagrant/app/Classes/Parsers/HomeDepot.py $parsedUrl";
                 break;

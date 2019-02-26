@@ -18,11 +18,18 @@
 
                 <hr/>
 
-                <div class="form-group row pt-1 mb-0">
-                    <label for="url" class="col-sm-1 col-form-label">URL</label>
-                    <div class="col-sm-11">
-                        <input type="text" class="form-control" id="url" name="url" required>
-                    </div>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <select class="form-control" id="company" name="companyId">
+                        @foreach($companies as $company)
+                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="text" class="form-control" id="url" name="url" required>
                 </div>
             </div>
         </div>

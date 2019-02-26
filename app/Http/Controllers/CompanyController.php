@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 
-class CompanyController extends Controller
-{
+class CompanyController extends Controller {
     private $companies = null;
 
     /**
