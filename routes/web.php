@@ -12,8 +12,8 @@
 */
 
     Auth::routes(['register' => false]);
-    Route::match(array('GET', 'POST'), 'login/', 'AuthController@login');
-    Route::get('logout/', 'AuthController@logout');
+    Route::match(array('GET', 'POST'), 'login/', 'AuthController@login')->name('login');
+    Route::get('logout/', 'AuthController@logout')->name('logout');
 
     Route::get('', 'DashboardController');
 

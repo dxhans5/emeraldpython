@@ -23,7 +23,7 @@ dollars = SOUP.select(".price__dollars")
 cents = SOUP.select(".price__cents")
 title = SOUP.select(".product-title__title")
 brand = SOUP.select(".product-title__brand > a > span")
-dimensions = SOUP.select(".specs__title > h4", text=re.compile(r'Dimensions'))
+dimensionsTables = SOUP.select(".specs__title > h4:contains(Dimensions)")
 
 # HomeDepot images are run by a single thumbnail that opens a popup gallery
 # Other images are listed on the gallery, but so are videos and 360 images, which we don't want
@@ -55,11 +55,14 @@ for item in SOUP.select('.list__item'):
     if not item.findChildren('a') and not item.findChildren('img'):
         bullets.append(item.text)
 
-print(dimensions)
-# for tableTitle in SOUP.select(".specs__title > h4"):
-#     if tableTitle.text == "Dimensions":
-#         nextSibling = tableTitle.parent.next_sibling.next_sibling
-#         print(nextSibling)
+dimensions = {}
+nextSibling = dimensionsTables[0].parent.next_sibling.next_sibling
+for specCell in nextSibling.select('.specs__group'):
+    label = specCell.select('.specs__cell--label')[0].text
+    value = specCell.select(
+        '.specs__cell--label')[0].next_sibling.next_sibling.text
+
+    dimensions.update({label: value})
 
 DRIVER.quit()
 
@@ -69,5 +72,6 @@ data['brand'] = brand[0].text
 data['price'] = dollars[0].text + "." + cents[0].text
 data['bullets'] = bullets
 data['images'] = imgs
+data['dimensions'] = dimensions
 
-# print(json.dumps(data))
+print(json.dumps(data))

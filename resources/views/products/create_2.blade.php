@@ -32,6 +32,8 @@
                         <textarea class="form-control" rows="5" id="bullets" name="bullets">{{ $product->bullets }}</textarea>
                     </div>
 
+                    <example-component></example-component>
+
                 </div>
             </div>
             {!! Form::close() !!}
@@ -41,12 +43,19 @@
     <div class="row">
         <div class="col-sm-12">
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Raw Scrape</h5>
-                <hr/>
-                <pre><?php print_r($product->scrape); ?></pre>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p class="panel-title"><a data-toggle="collapse" href="#rawDump">Raw Dump</a></p>
+                    </div>
+                    <div id="rawDump" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <pre><?php print_r($product->scrape); ?></pre>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 @endsection

@@ -35,7 +35,7 @@
     </script>
 
 </head>
-<body>
+<body id='app'>
     <div class='row p-0 m-0'>
         @auth
         <div class='col-sm-2 p-0 m-0'>
