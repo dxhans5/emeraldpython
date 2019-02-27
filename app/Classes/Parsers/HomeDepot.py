@@ -3,6 +3,7 @@
 import sys
 import SoupXPath
 import json
+import re
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -22,6 +23,7 @@ dollars = SOUP.select(".price__dollars")
 cents = SOUP.select(".price__cents")
 title = SOUP.select(".product-title__title")
 brand = SOUP.select(".product-title__brand > a > span")
+dimensions = SOUP.select(".specs__title > h4", text=re.compile(r'Dimensions'))
 
 # HomeDepot images are run by a single thumbnail that opens a popup gallery
 # Other images are listed on the gallery, but so are videos and 360 images, which we don't want
@@ -53,6 +55,12 @@ for item in SOUP.select('.list__item'):
     if not item.findChildren('a') and not item.findChildren('img'):
         bullets.append(item.text)
 
+print(dimensions)
+# for tableTitle in SOUP.select(".specs__title > h4"):
+#     if tableTitle.text == "Dimensions":
+#         nextSibling = tableTitle.parent.next_sibling.next_sibling
+#         print(nextSibling)
+
 DRIVER.quit()
 
 data = {}
@@ -62,4 +70,4 @@ data['price'] = dollars[0].text + "." + cents[0].text
 data['bullets'] = bullets
 data['images'] = imgs
 
-print(json.dumps(data))
+# print(json.dumps(data))
