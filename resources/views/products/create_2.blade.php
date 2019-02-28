@@ -32,7 +32,7 @@
                         <textarea class="form-control" rows="5" id="bullets" name="bullets">{{ $product->bullets }}</textarea>
                     </div>
 
-                    <example-component></example-component>
+                    <product-attribute-component :title="'Dimensions'" :attribute-data="'{{ $product->dimensions }}'"></product-attribute-component>
 
                 </div>
             </div>

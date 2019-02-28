@@ -44,7 +44,7 @@ class ProductController extends Controller {
 
             $product->title = $scrape->title;
             $product->bullets = $bulletsMarkup;
-            $product->dimensions = null;
+            $product->dimensions = json_encode($scrape->dimensions); // Getting passed to vue component
             $product->weight = null;
             $product->batteries = null;
             $product->asin = null;
