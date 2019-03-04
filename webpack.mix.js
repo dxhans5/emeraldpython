@@ -12,4 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+    .js('app/Classes/UberGallery/colorbox/jquery.colorbox.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css')
+    .styles([
+        'app/Classes/UberGallery/UberGallery.css',
+        'app/Classes/UberGallery/colorbox/1/colorbox.css'
+    ], 'public/css/app.css');
