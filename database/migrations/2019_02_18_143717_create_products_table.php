@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('product_id');
             $table->string('title');
             $table->string('bullet_points')->nullable()->default(NULL);
             $table->string('dimensions')->nullable()->default(NULL);
@@ -22,6 +23,8 @@ class CreateProductsTable extends Migration
             $table->string('batteries')->nullable()->default(NULL);
             $table->string('asin')->nullable()->default(NULL);
             $table->string('upc')->nullable()->default(NULL);
+            $table->string('sku')->nullable()->default(NULL);
+            $table->string('brand')->nullable()->default(NULL);
             $table->string('model')->nullable()->default(NULL);
             $table->text('description');
             $table->integer('company_id');

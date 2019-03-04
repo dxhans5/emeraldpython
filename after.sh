@@ -24,4 +24,9 @@ sudo apt autoremove
 
 ## Setup the database
 cd /vagrant/
+
+# Install requests
+sudo pip install requests
+
+# Run migrations
 php artisan migrate --seed

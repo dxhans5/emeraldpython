@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+require_once(base_path('app/Classes/UberGallery/UberGallery.php'));
+
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Company;
 use App\Classes\Parsers\ParserLoader;
+use App\Classes\UberGallery\UberGallery;
 
 class ProductController extends Controller {
 
@@ -29,9 +32,12 @@ class ProductController extends Controller {
             $parser = new ParserLoader;
             $company = new Company;
             $product = new Product;
+            $gallery = new UberGallery;
 
             $company = $company->where('id', $request->get('companyId'))->first();
             $scrape = json_decode($parser->scrape($company->parser, $request->get('url')));
+
+            $gallery = $gallery->init()->createGallery("/public/gallery-images/$scrape->productId");
 
             $bulletsMarkup = "";
             if(!empty($scrape->bullets)) {
@@ -43,19 +49,20 @@ class ProductController extends Controller {
             }
 
             $product->title = $scrape->title;
+            $product->productId = $scrape->productId;
+            $product->brand = $scrape->brand;
             $product->bullets = $bulletsMarkup;
             $product->dimensions = json_encode($scrape->dimensions); // Getting passed to vue component
-            $product->weight = null;
-            $product->batteries = null;
-            $product->asin = null;
-            $product->upc = null;
-            $product->model = null;
-            $product->description = null;
+            $product->details = json_encode($scrape->details); // Getting passed to vue component
+            $product->sku = $scrape->sku;
+            $product->model = $scrape->model;
+            $product->description = $scrape->description;
             $product->company = $company;
             $product->scrape = $scrape;
 
-            return view('products.create_2', ['product' => $product]);
+            return view('products.create_2', ['product' => $product, 'gallery' => $gallery]);
         } else {
+            # Get the companies for the scrape dropdown
             $companies = new Company;
             $companies = $companies->all();
 

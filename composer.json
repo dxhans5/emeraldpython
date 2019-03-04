@@ -33,6 +33,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "./app/Classes/UberGallery/UberGallery.php"
         ]
     },
     "autoload-dev": {
