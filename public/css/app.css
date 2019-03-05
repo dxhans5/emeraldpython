@@ -44,3 +44,11 @@ nav ul a:hover {
   height: 100px;
 }
 
+.linkable {
+  cursor: pointer;
+}
+
+.modal-body > img {
+  width: 100%;
+}
+
