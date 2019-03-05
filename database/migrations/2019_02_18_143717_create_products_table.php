@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->string('sku')->nullable()->default(NULL);
             $table->string('brand')->nullable()->default(NULL);
             $table->string('model')->nullable()->default(NULL);
+            $table->string('images')->nullable()->default(NULL);
             $table->text('description');
             $table->integer('company_id');
             $table->integer('warranty_policy_id');

@@ -30,6 +30,3 @@ sudo pip install requests
 
 # Run migrations
 php artisan migrate --seed
-
-# Permissions
-sudo chmod 777 /vagrant/app/Classes/UberGallery/cache

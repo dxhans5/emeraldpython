@@ -71,6 +71,12 @@
                         <product-attribute-component :title="'Details'" :attribute-data="'{{ $product->details }}'"></product-attribute-component>
                     </div>
                 </div>
+
+                <div class="row mt-4">
+                    <div class="col-sm-12">
+                        <image-gallery-component :images="'{{ $product->images }}'"></image-gallery-component>
+                    </div>
+                </div>
             </div>
         </div>
 

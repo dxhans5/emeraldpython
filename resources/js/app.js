@@ -20,6 +20,9 @@ window.Vue = require('vue');
 Vue.component('product-attribute-component', require('./components/ProductAttributeComponent.vue').default, {
     name: 'product-attribute-component'
 });
+Vue.component('image-gallery-component', require('./components/ImageGalleryComponent.vue').default, {
+    name: 'image-gallery-component'
+});
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

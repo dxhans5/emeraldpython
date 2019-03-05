@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-require_once(base_path('app/Classes/UberGallery/UberGallery.php'));
-
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Company;
 use App\Classes\Parsers\ParserLoader;
-use App\Classes\UberGallery\UberGallery;
 
 class ProductController extends Controller {
 
@@ -32,12 +29,9 @@ class ProductController extends Controller {
             $parser = new ParserLoader;
             $company = new Company;
             $product = new Product;
-            $gallery = new UberGallery;
 
             $company = $company->where('id', $request->get('companyId'))->first();
             $scrape = json_decode($parser->scrape($company->parser, $request->get('url')));
-
-            $gallery = $gallery->init()->createGallery("/public/gallery-images/$scrape->productId");
 
             $bulletsMarkup = "";
             if(!empty($scrape->bullets)) {
@@ -58,9 +52,10 @@ class ProductController extends Controller {
             $product->model = $scrape->model;
             $product->description = $scrape->description;
             $product->company = $company;
+            $product->images = json_encode($scrape->images); // Getting passed to vue component
             $product->scrape = $scrape;
 
-            return view('products.create_2', ['product' => $product, 'gallery' => $gallery]);
+            return view('products.create_2', ['product' => $product]);
         } else {
             # Get the companies for the scrape dropdown
             $companies = new Company;
