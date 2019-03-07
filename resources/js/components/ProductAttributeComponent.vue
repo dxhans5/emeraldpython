@@ -5,7 +5,7 @@
 
       <table class="table table-sm table-borderless">
         <tbody>
-          <tr v-for="(attribute, key) in JSON.parse(this.attributeData)">
+          <tr v-for="(attribute, key) in JSON.parse(this.attributeData)" :key="key">
             <td>
               <input type="text" class="form-control" :value="key">
             </td>
