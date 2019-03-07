@@ -69,7 +69,7 @@ class ProductController extends Controller {
      * Invokes the product list
      */
     public function list(Request $request) {
-        $products = [];
+        $products = Product::all();
         return view('products.listings', ['products' => $products]);
     }
 

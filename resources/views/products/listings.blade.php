@@ -10,15 +10,34 @@
         </div>
     </div>
 
-    <hr/>
-
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if(!empty($products))
-                @foreach($products as $product)
-                    {{ $product }}
-                @endforeach
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Company</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($products as $product)
+                            <tr>
+                                <td></td>
+                                <td>{{ $product->title }}</td>
+                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->company_id }}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             @else
+                <hr/>
                 <p>There are no active products</p>
             @endif
         </div>
