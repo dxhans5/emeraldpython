@@ -11,7 +11,7 @@
 
     <form method="post">
         <div class="row mb-4">
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Product Information</h5>
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 <div class="row">
                     <div class="col-sm-12">
                         <product-attribute-component :title="'Dimensions'" :attribute-data="'{{ $product->dimensions }}'"></product-attribute-component>
@@ -72,12 +72,12 @@
                     </div>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col-sm-12">
-                        <image-gallery-component :images="'{{ $product->images }}'"></image-gallery-component>
-                    </div>
-                </div>
             </div>
+
+            <div class="col-sm-2 text-center">
+                <image-gallery-component :images="'{{ $product->images }}'"></image-gallery-component>
+            </div>
+
         </div>
 
         <div class="row">

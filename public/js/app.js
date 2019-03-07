@@ -133,19 +133,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["images"],
   data: function data() {
     return {
-      fullSizeImg: null
+      fullSizeImg: null,
+      imgArray: []
     };
   },
   components: {
-    SlickItem: SlickItem,
-    SlickList: SlickList
+    SlickItem: vue_slicksort__WEBPACK_IMPORTED_MODULE_0__["SlickItem"],
+    SlickList: vue_slicksort__WEBPACK_IMPORTED_MODULE_0__["SlickList"]
   },
   methods: {
     showImage: function showImage(e) {
@@ -153,7 +152,9 @@ __webpack_require__.r(__webpack_exports__);
       $("#imgModal").modal("show");
     }
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.imgArray = JSON.parse(this.images);
+  }
 });
 
 /***/ }),
@@ -680,44 +681,38 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "rootEl" }, [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("Images")]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row" },
-          [
-            _c(
-              "SlickList",
-              {
-                attrs: { lockAxis: "y" },
-                model: {
-                  value: _vm.sortedImages,
-                  callback: function($$v) {
-                    _vm.sortedImages = $$v
-                  },
-                  expression: "sortedImages"
-                }
-              },
-              _vm._l(JSON.parse(this.images), function(image) {
-                return _c(
-                  "SlickItem",
-                  { key: _vm.index, attrs: { index: _vm.index } },
-                  [
-                    _c("img", {
-                      staticClass: "img-thumbnail linkable",
-                      attrs: { src: "/gallery-images/" + image },
-                      on: { click: _vm.showImage }
-                    })
-                  ]
-                )
-              }),
-              1
-            )
-          ],
-          1
-        )
-      ])
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("h5", { staticClass: "card-title" }, [_vm._v("Images")]),
+          _vm._v(" "),
+          _c(
+            "SlickList",
+            {
+              attrs: { lockAxis: "y", value: _vm.imgArray },
+              model: {
+                value: _vm.imgArray,
+                callback: function($$v) {
+                  _vm.imgArray = $$v
+                },
+                expression: "imgArray"
+              }
+            },
+            _vm._l(_vm.imgArray, function(image, index) {
+              return _c("SlickItem", { key: index, attrs: { index: index } }, [
+                _c("img", {
+                  staticClass: "img-thumbnail linkable",
+                  attrs: { src: "/gallery-images/" + image },
+                  on: { click: _vm.showImage }
+                })
+              ])
+            }),
+            1
+          )
+        ],
+        1
+      )
     ]),
     _vm._v(" "),
     _c(
@@ -741,7 +736,10 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 this.fullSizeImg
-                  ? _c("img", { attrs: { src: this.fullSizeImg } })
+                  ? _c("img", {
+                      staticClass: "full-size-img",
+                      attrs: { src: this.fullSizeImg }
+                    })
                   : _vm._e()
               ])
             ])

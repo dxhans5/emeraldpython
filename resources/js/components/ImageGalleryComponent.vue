@@ -4,17 +4,15 @@
       <div class="card-body">
         <h5 class="card-title">Images</h5>
 
-        <div class="row">
-          <SlickList lockAxis="y" v-model="sortedImages">
-            <SlickItem v-for="image in JSON.parse(this.images)" :index="index" :key="index">
-              <img
-                v-on:click="showImage"
-                :src="'/gallery-images/' + image"
-                class="img-thumbnail linkable"
-              >
-            </SlickItem>
-          </SlickList>
-        </div>
+        <SlickList lockAxis="y" v-model="imgArray" :value="imgArray">
+          <SlickItem v-for="(image, index) in imgArray" :index="index" :key="index">
+            <img
+              v-on:click="showImage"
+              :src="'/gallery-images/' + image"
+              class="img-thumbnail linkable"
+            >
+          </SlickItem>
+        </SlickList>
       </div>
     </div>
 
@@ -28,7 +26,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <img v-if="this.fullSizeImg" :src="this.fullSizeImg">
+            <img v-if="this.fullSizeImg" :src="this.fullSizeImg" class="full-size-img">
           </div>
         </div>
       </div>
@@ -37,13 +35,14 @@
 </template>
 
 <script>
-import { ContainerMixin, ElementMixin } from "vue-slicksort";
+import { SlickList, SlickItem } from "vue-slicksort";
 
 export default {
   props: ["images"],
   data: function() {
     return {
-      fullSizeImg: null
+      fullSizeImg: null,
+      imgArray: []
     };
   },
   components: {
@@ -56,6 +55,8 @@ export default {
       $("#imgModal").modal("show");
     }
   },
-  mounted() {}
+  mounted() {
+    this.imgArray = JSON.parse(this.images);
+  }
 };
 </script>

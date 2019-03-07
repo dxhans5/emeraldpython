@@ -48,7 +48,13 @@ nav ul a:hover {
   cursor: pointer;
 }
 
-.modal-body > img {
+.img-thumbnail.linkable {
+  width: 100px;
+  height: 100px;
+  margin: 4px;
+}
+
+.full-size-img {
   width: 100%;
 }
 
