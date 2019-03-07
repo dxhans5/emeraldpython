@@ -60,8 +60,8 @@
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label for="bullets">Bullet Points</label>
-                        <textarea class="form-control" rows="5" id="bullets" name="bullets">{{ $product->bullets }}</textarea>
+                        <label for="bullet_points">Bullet Points</label>
+                        <textarea class="form-control" rows="5" id="bullet_points" name="bullet_points">{{ $product->bullets }}</textarea>
                     </div>
                 </div>
             </div>

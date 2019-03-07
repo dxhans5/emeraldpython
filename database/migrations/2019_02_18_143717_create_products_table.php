@@ -17,13 +17,13 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('product_id');
             $table->string('title');
-            $table->string('bullet_points')->nullable()->default(NULL);
+            $table->text('bullet_points')->nullable()->default(NULL);
             $table->string('dimensions')->nullable()->default(NULL);
             $table->string('weight')->nullable()->default(NULL);
             $table->string('sku')->nullable()->default(NULL);
             $table->string('brand')->nullable()->default(NULL);
             $table->string('model')->nullable()->default(NULL);
-            $table->string('images')->nullable()->default(NULL);
+            $table->text('images')->nullable()->default(NULL);
             $table->text('description');
             $table->integer('company_id');
             $table->timestamps();
