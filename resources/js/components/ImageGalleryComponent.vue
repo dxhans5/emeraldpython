@@ -6,29 +6,13 @@
 
         <SlickList lockAxis="y" v-model="imgArray" :value="imgArray">
           <SlickItem v-for="(image, index) in imgArray" :index="index" :key="index">
-            <img
-              v-on:click="showImage"
-              :src="'/gallery-images/' + image"
-              class="img-thumbnail linkable"
-            >
+            <div class="img-wrapper">
+              <img :src="'/gallery-images/' + image" class="img-thumbnail linkable">
+            </div>
           </SlickItem>
         </SlickList>
-      </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <img v-if="this.fullSizeImg" :src="this.fullSizeImg" class="full-size-img">
-          </div>
-        </div>
+        <input type="hidden" name="imgs" :value="JSON.stringify(imgArray)">
       </div>
     </div>
   </div>
@@ -41,7 +25,6 @@ export default {
   props: ["images"],
   data: function() {
     return {
-      fullSizeImg: null,
       imgArray: []
     };
   },
@@ -49,12 +32,7 @@ export default {
     SlickItem,
     SlickList
   },
-  methods: {
-    showImage: function(e) {
-      this.fullSizeImg = e.currentTarget.getAttribute("src");
-      $("#imgModal").modal("show");
-    }
-  },
+  methods: {},
   mounted() {
     this.imgArray = JSON.parse(this.images);
   }

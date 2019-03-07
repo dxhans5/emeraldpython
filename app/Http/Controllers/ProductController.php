@@ -78,12 +78,25 @@ class ProductController extends Controller {
     /**
      * Submit the product to the database
      */
-    private function submitProduct(Request $request, String $id = null) {
+    public function submit(Request $request, String $id = null) {
+        $company = new Company;
+        $company = $company->where('name', $request->company)->first();
+
         if(empty($id)) {
             $product = new Product;
         } else {
             $product = $product->where('id', $id)->first();
         }
+
+        $product->product_id = $request->get('product_id');
+        $product->company_id = $company->id;
+        $product->title = $this->sanitize($request->title);
+        $product->bullet_points = $this->sanitize($request->bullet_points);
+        $product->sku = $this->sanitize($request->sku);
+        $product->brand = $this->sanitize($request->brand);
+        $product->model = $this->sanitize($request->model);
+        $product->images = json_encode($request->imgs);
+        $product->description = $this->sanitize($request->description);
 
         // Get items from the form here
         $product->save();

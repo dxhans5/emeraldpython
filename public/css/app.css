@@ -58,3 +58,17 @@ nav ul a:hover {
   width: 100%;
 }
 
+.img-wrapper {
+  position: relative;
+  margin: 4px;
+  width: 100%;
+}
+
+.img-wrapper > .fa-trash {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #e35b5a;
+  cursor: pointer;
+}
+

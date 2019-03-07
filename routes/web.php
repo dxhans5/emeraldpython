@@ -28,4 +28,5 @@
     Route::group(['prefix' => 'products'], function(){
         Route::get('/', 'ProductController@list');
         Route::match(array('GET', 'POST'), '/create', 'ProductController@create');
+        Route::post('/submit', 'ProductController@submit');
     });

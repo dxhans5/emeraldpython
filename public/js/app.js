@@ -117,28 +117,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["images"],
   data: function data() {
     return {
-      fullSizeImg: null,
       imgArray: []
     };
   },
@@ -146,12 +129,7 @@ __webpack_require__.r(__webpack_exports__);
     SlickItem: vue_slicksort__WEBPACK_IMPORTED_MODULE_0__["SlickItem"],
     SlickList: vue_slicksort__WEBPACK_IMPORTED_MODULE_0__["SlickList"]
   },
-  methods: {
-    showImage: function showImage(e) {
-      this.fullSizeImg = e.currentTarget.getAttribute("src");
-      $("#imgModal").modal("show");
-    }
-  },
+  methods: {},
   mounted: function mounted() {
     this.imgArray = JSON.parse(this.images);
   }
@@ -701,75 +679,28 @@ var render = function() {
             },
             _vm._l(_vm.imgArray, function(image, index) {
               return _c("SlickItem", { key: index, attrs: { index: index } }, [
-                _c("img", {
-                  staticClass: "img-thumbnail linkable",
-                  attrs: { src: "/gallery-images/" + image },
-                  on: { click: _vm.showImage }
-                })
+                _c("div", { staticClass: "img-wrapper" }, [
+                  _c("img", {
+                    staticClass: "img-thumbnail linkable",
+                    attrs: { src: "/gallery-images/" + image }
+                  })
+                ])
               ])
             }),
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "hidden", name: "imgs" },
+            domProps: { value: JSON.stringify(_vm.imgArray) }
+          })
         ],
         1
       )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "imgModal",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                this.fullSizeImg
-                  ? _c("img", {
-                      staticClass: "full-size-img",
-                      attrs: { src: this.fullSizeImg }
-                    })
-                  : _vm._e()
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
