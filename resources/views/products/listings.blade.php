@@ -27,7 +27,7 @@
                     <tbody>
                         @foreach($products as $product)
                             <tr>
-                                <td></td>
+                                <td>{{ $productController->getFirstImage($product) }}</td>
                                 <td>{{ $product->title }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->company_id }}</td>
@@ -36,6 +36,10 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                <pre>
+                    <?php print_r($product); ?>
+                </pre>
             @else
                 <hr/>
                 <p>There are no active products</p>

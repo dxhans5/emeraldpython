@@ -5,7 +5,8 @@
 @import 'variables';
 
 html,
-body {
+body,
+#app {
     min-height: 100%;
     height: 100%;
     margin: 0;
@@ -13,7 +14,7 @@ body {
 
 nav {
     background-color: $dark-gray;
-    min-height: 100%;
+    min-height: 100vh;
     padding: 10px;
     position: relative;
 
@@ -76,4 +77,8 @@ nav {
     right: 20px;
     color: $red;
     cursor: pointer;
+}
+
+.input-error {
+    background-color: $red;
 }

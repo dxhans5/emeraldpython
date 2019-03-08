@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Models\Product;
 use App\Models\Company;
 use App\Classes\Parsers\ParserLoader;
@@ -33,31 +34,41 @@ class ProductController extends Controller {
             $company = $company->where('id', $request->get('companyId'))->first();
             $scrape = json_decode($parser->scrape($company->parser, $request->get('url')));
 
-            $bulletsMarkup = "";
-            if(!empty($scrape->bullets)) {
-                $bulletsMarkup .= "<ul>";
-                foreach($scrape->bullets as $bullet) {
-                    $bulletsMarkup .= "<li>$bullet</li>";
+            if(!empty($scrape)) {
+
+                $bulletsMarkup = "";
+                if(!empty($scrape->bullets)) {
+                    $bulletsMarkup .= "<ul>";
+                    foreach($scrape->bullets as $bullet) {
+                        $bulletsMarkup .= "<li>$bullet</li>";
+                    }
+                    $bulletsMarkup .= "</ul>";
                 }
-                $bulletsMarkup .= "</ul>";
+
+                $product->title = $scrape->title;
+                $product->productId = $scrape->productId;
+                $product->brand = $scrape->brand;
+                $product->bullets = $bulletsMarkup;
+                $product->dimensions = json_encode($scrape->dimensions); // Getting passed to vue component
+                $product->details = json_encode($scrape->details); // Getting passed to vue component
+                $product->sku = $scrape->sku;
+                $product->model = $scrape->model;
+                $product->dollars = $scrape->dollars;
+                $product->cents = $scrape->cents;
+                $product->description = $scrape->description;
+                $product->company = $company;
+                $product->images = json_encode($scrape->images); // Getting passed to vue component
+                $product->scrape = $scrape;
+
+                return view('products.create_2', ['product' => $product]);
+            } else {
+                // Something screwed up...
+                session()->forget('error'); // just in case there are errors left over from something (edge case)
+                session()->flash('error', 'There was an issue parsing the website.');
+                return back()->withInput(Input::all());
             }
-
-            $product->title = $scrape->title;
-            $product->productId = $scrape->productId;
-            $product->brand = $scrape->brand;
-            $product->bullets = $bulletsMarkup;
-            $product->dimensions = json_encode($scrape->dimensions); // Getting passed to vue component
-            $product->details = json_encode($scrape->details); // Getting passed to vue component
-            $product->sku = $scrape->sku;
-            $product->model = $scrape->model;
-            $product->description = $scrape->description;
-            $product->company = $company;
-            $product->images = json_encode($scrape->images); // Getting passed to vue component
-            $product->scrape = $scrape;
-
-            return view('products.create_2', ['product' => $product]);
         } else {
-            # Get the companies for the scrape dropdown
+            // Get the companies for the scrape dropdown
             $companies = new Company;
             $companies = $companies->all();
 
@@ -70,7 +81,7 @@ class ProductController extends Controller {
      */
     public function list(Request $request) {
         $products = Product::all();
-        return view('products.listings', ['products' => $products]);
+        return view('products.listings', ['products' => $products, 'productController' => $this]);
     }
 
     /**
@@ -96,5 +107,12 @@ class ProductController extends Controller {
         $product->save();
 
         return redirect('products');
+    }
+
+    /**
+     * Returns the first image in an array of images
+     */
+    public function getFirstImage(Product $product) {
+        //print_r($product->images); die();
     }
 }

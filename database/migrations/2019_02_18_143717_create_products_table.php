@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('brand')->nullable()->default(NULL);
             $table->string('model')->nullable()->default(NULL);
             $table->text('images')->nullable()->default(NULL);
+            $table->float('price', 5, 2)->default(0.00);
             $table->text('description');
             $table->integer('company_id');
             $table->timestamps();

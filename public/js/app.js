@@ -692,7 +692,7 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             attrs: { type: "hidden", name: "imgs" },
-            domProps: { value: JSON.stringify(_vm.imgArray) }
+            domProps: { value: _vm.imgArray }
           })
         ],
         1
@@ -730,7 +730,7 @@ var render = function() {
         _c(
           "tbody",
           _vm._l(JSON.parse(this.attributeData), function(attribute, key) {
-            return _c("tr", [
+            return _c("tr", { key: key }, [
               _c("td", [
                 _c("input", {
                   staticClass: "form-control",

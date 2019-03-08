@@ -7,14 +7,23 @@ import re
 import uuid
 import os
 import requests
+import urllib3
 
 from os.path import basename
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait  # available since 2.4.0
+# available since 2.26.0
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup
 
+# Suppress the warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Methods
+attempt = 0
+
+
 def populateTable(table, data):
     nextSibling = data[0].parent.next_sibling.next_sibling
     for specCell in nextSibling.select('.specs__group'):
@@ -37,18 +46,44 @@ def download_image(image_url, path):
     return local_filename
 
 
+def attemptConnection(url):
+    try:
+        DRIVER.get(url)
+        attempt = 0
+    except ConnectionError:
+        if(attempt <= 3):
+            attempt = attempt + 1
+            print("connection error to %s. trying again...(attempt: %s)" %
+                  path, attempt)
+            attemptConnection(url)
+        else:
+            sys.exit("connection error to %s. (fatal - attempts maxed out)" %
+                     path, attempt)
+
+
+def parseData(obj, param, rule):
+    if 'text' in rule:
+        try:
+            obj[param] = (rule['text'][0].text).strip()
+        except IndexError:
+            obj[param] = ''
+            pass
+    elif 'object' in rule:
+        obj[param] = rule['object']
+
+    return obj
+
+
 # launch url
-URL = sys.argv[1]
+url = sys.argv[1]
 
 DRIVER = webdriver.PhantomJS()
 DRIVER.implicitly_wait(30)
-DRIVER.get(URL)
+attemptConnection(url)
 
 # Selenium hands the page source to Beautiful Soup
 SOUP = BeautifulSoup(DRIVER.page_source, 'lxml')
 
-dollars = SOUP.select(".price__dollars")
-cents = SOUP.select(".price__cents")
 title = SOUP.select(".product-title__title")
 brand = SOUP.select(".product-title__brand > a > span")
 dimensionsData = SOUP.select(".specs__title > h4:contains(Dimensions)")
@@ -57,6 +92,30 @@ sku = SOUP.select("#product_store_sku")
 model = SOUP.select(".modelNo")
 description = SOUP.select("p[itemprop='description']")
 productId = str(uuid.uuid4())
+
+# HomeDepot will sometimes sell products for lower than manufacturers price...when this happens
+# they have a special dom in place that requires someone to add the item to the cart to view
+# the price
+if SOUP.select(".map-pricing__message"):
+    DRIVER.find_element_by_xpath(
+        "//*[@id='atc_shipIt']").click()
+
+    try:
+        # Wait for the checkout button to appear
+        iframe = WebDriverWait(DRIVER, 60).until(
+            EC.presence_of_element_located((By.TAG_NAME, "iframe")))
+
+        print(iframe.get_attribute('src'))
+        # data-automation-id="checkoutNowButton"
+
+    finally:
+        print('moving on...')
+
+
+# else:
+#     dollars = SOUP.select(".price__dollars")
+#     cents = SOUP.select(".price__cents")
+
 
 # HomeDepot images are run by a single thumbnail that opens a popup gallery
 # Other images are listed on the gallery, but so are videos and 360 images, which we don't want
@@ -71,7 +130,7 @@ path = '/vagrant/public/gallery-images/' + productId + '/'
 try:
     os.mkdir(path)
 except OSError:
-    print("creation of the directory %s failed" % path)
+    sys.exit("creation of the directory %s failed" % path)
 
 DRIVER.find_element_by_xpath(
     "//*[@id='thumbnails']/a[1]").click()
@@ -105,19 +164,22 @@ details = {}
 populateTable(dimensions, dimensionsData)
 populateTable(details, detailsData)
 
+# We're done scraping
 DRIVER.quit()
 
+
 data = {}
-data['title'] = (title[0].text).strip()
-data['brand'] = (brand[0].text).strip()
-data['price'] = (dollars[0].text).strip() + "." + (cents[0].text).strip()
-data['bullets'] = bullets
-data['images'] = imgs
-data['dimensions'] = dimensions
-data['details'] = details
-data['sku'] = (sku[0].text).strip()
-data['model'] = (model[0].text).strip().replace('Model # ', '')
-data['description'] = (description[0].text).strip()
-data['productId'] = productId
+data = parseData(data, 'title', {'text': title})
+data = parseData(data, 'brand', {'text': brand})
+data = parseData(data, 'dollars', {'text': dollars})
+data = parseData(data, 'cents', {'text': cents})
+data = parseData(data, 'bullets', {'object': bullets})
+data = parseData(data, 'images', {'object': imgs})
+data = parseData(data, 'dimensions', {'object': dimensions})
+data = parseData(data, 'details', {'object': details})
+data = parseData(data, 'sku', {'text': sku})
+data = parseData(data, 'model', {'text': model})
+data = parseData(data, 'description', {'text': description})
+data = parseData(data, 'productId', {'object': productId})
 
 print(json.dumps(data))
