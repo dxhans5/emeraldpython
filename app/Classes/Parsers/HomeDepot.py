@@ -102,6 +102,10 @@ if SOUP.select(".map-pricing__message"):
 
     try:
         # Wait for the checkout button to appear
+        overlay = WebDriverWait(DRIVER, 60).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "thd-overlay")))
+
+        # Need to look for the next iframe after this element is found
         iframe = WebDriverWait(DRIVER, 60).until(
             EC.presence_of_element_located((By.TAG_NAME, "iframe")))
 
