@@ -50,7 +50,7 @@ def attemptConnection(url):
     try:
         DRIVER.get(url)
         attempt = 0
-    except ConnectionError:
+    except requests.ConnectionError:
         if(attempt <= 3):
             attempt = attempt + 1
             print("connection error to %s. trying again...(attempt: %s)" %
@@ -104,13 +104,13 @@ if SOUP.select(".map-pricing__message"):
         # Wait for the checkout button to appear
         overlay = WebDriverWait(DRIVER, 60).until(
             EC.presence_of_element_located((By.CLASS_NAME, "thd-overlay")))
+        SOUP4 = BeautifulSoup(DRIVER.page_source, 'lxml')
+        checkoutButton = SOUP4.find_all(
+            lambda tag: tag.name == "button" and
+            len(tag.attrs) == 1)
+        print(checkoutButton)
 
-        # Need to look for the next iframe after this element is found
-        iframe = WebDriverWait(DRIVER, 60).until(
-            EC.presence_of_element_located((By.TAG_NAME, "iframe")))
-
-        print(iframe.get_attribute('src'))
-        # data-automation-id="checkoutNowButton"
+        # # data-automation-id="checkoutNowButton"
 
     finally:
         print('moving on...')
