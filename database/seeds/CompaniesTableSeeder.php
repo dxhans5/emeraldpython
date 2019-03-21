@@ -23,5 +23,29 @@ class CompaniesTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ]
         );
+
+        DB::table('companies')->insert(
+            [
+                'name' => 'BryBelly',
+                'url' => 'https://www.brybelly.com',
+                'parser' => 'BryBelly',
+                'return_policy_id' => 1,
+                'shipping_policy_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('companies')->insert(
+            [
+                'name' => 'diecastdropshipper.com',
+                'url' => 'https://www.diecastdropshipper.com',
+                'parser' => 'DieCastDropshipper',
+                'return_policy_id' => 1,
+                'shipping_policy_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
     }
 }
