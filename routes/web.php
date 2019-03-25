@@ -29,4 +29,5 @@
         Route::get('/', 'ProductController@list');
         Route::match(array('GET', 'POST'), '/create', 'ProductController@create');
         Route::post('/submit', 'ProductController@submit');
+        Route::get('/edit/{id}', 'ProductController@edit');
     });

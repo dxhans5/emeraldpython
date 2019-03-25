@@ -12,7 +12,7 @@
           </SlickItem>
         </SlickList>
 
-        <input type="hidden" name="imgs" :value="imgArray">
+        <input type="hidden" name="imgs" :value="this.images">
       </div>
     </div>
   </div>

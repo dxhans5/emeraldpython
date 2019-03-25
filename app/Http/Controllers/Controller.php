@@ -16,6 +16,6 @@ class Controller extends BaseController
      *      Sanitizes user input
      */
     protected function sanitize($input) {
-        return \htmlspecialchars(filter_var($input, FILTER_SANITIZE_STRING));
+        return \htmlspecialchars(filter_var(htmlentities(trim($input)), FILTER_SANITIZE_STRING));
     }
 }

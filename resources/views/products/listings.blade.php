@@ -21,24 +21,28 @@
                             <th scope="col">Title</th>
                             <th scope="col">Price</th>
                             <th scope="col">Company</th>
+                            <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($products as $product)
                             <tr>
-                                <td>{{ $productController->getFirstImage($product) }}</td>
-                                <td>{{ $product->title }}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->company_id }}</td>
-                                <td></td>
+                                <td class='thumbnail-wrapper'><img class='thumbnail' src='{{ "gallery-images/" . $productController->getFirstImage($product) }}'></td>
+                                <td><a href='{{ url("/products/edit/" . $product->id) }}'>{{ $product->title }}</a></td>
+                                <td>${{ $product->price }}</td>
+                                <td>{{ $product->company->name }}</td>
+                                <td>{{ $product->status }}</td>
+                                <td>
+                                    <span class="@if($product->status == 'active') red @else green @endif"><i class="fas fa-exchange-alt"></i></span>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
 
                 <pre>
-                    <?php print_r($product); ?>
+                    <?php print_r($products); ?>
                 </pre>
             @else
                 <hr/>

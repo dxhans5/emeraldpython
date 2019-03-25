@@ -24,11 +24,11 @@
 
                     <div class="form-group col-sm-12">
                         <label for="product_id">Product ID</label>
-                        <input type="text" class="form-control @if (empty($product->productId)) input-error @endif" id="product_id" value="{{ $product->productId }}" disabled>
-                        @if (empty($product->productId))
+                        <input type="text" class="form-control @if (empty($product->product_id)) input-error @endif" id="product_id" value="{{ $product->product_id }}" disabled>
+                        @if (empty($product->product_id))
                             <small class="form-text red">There was a problem creating the product ID.</small>
                         @endif
-                        <input type="hidden" name="product_id" value="{{ $product->productId }}">
+                        <input type="hidden" name="product_id" value="{{ $product->product_id }}">
                     </div>
 
                     <div class="form-group col-sm-12">
@@ -50,16 +50,9 @@
 
                     <div class="form-group col-sm-12">
                         <label for="price">Price</label>
-                        <input type="text" class="form-control @if (empty($product->dollars) || empty($product->dollars)) input-error @endif" id="price" name="price" value="
-                            @if (!empty($product->dollars) && !empty($product->cents))
-                                {{ $product->dollars }}.{{ $product->cents }}
-                            @endif
-                        ">
-                        @if (empty($product->dollars))
-                            <small class="form-text red">There was a problem scrapping the product dollars.</small>
-                        @endif
-                        @if (empty($product->cents))
-                            <small class="form-text red">There was a problem scrapping the product cents.</small>
+                        <input type="text" class="form-control @if (empty($product->price)) input-error @endif" id="price" name="price" value="@if (!empty($product->price)){{ $product->price }}@endif">
+                        @if (empty($product->price))
+                            <small class="form-text red">There was a problem scrapping the product price.</small>
                         @endif
                     </div>
 
@@ -97,8 +90,8 @@
 
                     <div class="form-group col-sm-12">
                         <label for="bullet_points">Bullet Points</label>
-                        <textarea class="form-control @if (empty($product->bullets)) input-error @endif" rows="5" id="bullet_points" name="bullet_points">{{ $product->bullets }}</textarea>
-                        @if (empty($product->bullets))
+                        <textarea class="form-control @if (empty($product->bullet_points)) input-error @endif" rows="5" id="bullet_points" name="bullet_points">{{ $product->bullet_points }}</textarea>
+                        @if (empty($product->bullet_points))
                             <small class="form-text red">There was a problem scrapping the product bullets.</small>
                         @endif
                     </div>
@@ -126,24 +119,6 @@
         </div>
 
     </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-
-            <div class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <p class="panel-title"><a data-toggle="collapse" href="#rawDump">Raw Dump</a></p>
-                    </div>
-                    <div id="rawDump" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <pre><?php print_r($product->scrape); ?></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 </form>
+
 @endsection

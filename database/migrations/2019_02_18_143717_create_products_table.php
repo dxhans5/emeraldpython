@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->float('price', 5, 2)->default(0.00);
             $table->text('description');
             $table->integer('company_id');
+            $table->enum('status', ['active', 'disabled'])->default('active');
             $table->timestamps();
         });
     }

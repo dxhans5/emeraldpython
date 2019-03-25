@@ -40,6 +40,10 @@ nav ul a:hover {
   color: #e35b5a;
 }
 
+.green {
+  color: #5bb644;
+}
+
 .img-wrapper {
   width: 100px;
   height: 100px;
@@ -75,5 +79,13 @@ nav ul a:hover {
 
 .input-error {
   background-color: #e35b5a;
+}
+
+.thumbnail {
+  width: 100%;
+}
+
+.thumbnail-wrapper {
+  width: 150px;
 }
 

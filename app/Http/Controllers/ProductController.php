@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Models\Product;
-use App\Models\Company;
+use Facades\App\Models\Company;
 use App\Classes\Parsers\ParserLoader;
 
 class ProductController extends Controller {
@@ -28,34 +28,40 @@ class ProductController extends Controller {
     public function create(Request $request) {
         if($request->isMethod('POST')) {
             $parser = new ParserLoader;
-            $company = new Company;
             $product = new Product;
 
-            $company = $company->where('id', $request->get('companyId'))->first();
-            $scrape = json_decode($parser->scrape($company->parser, $request->get('url')));
+            $company = Company::where('id', $request->get('companyId'))->first();
+            $scrape = json_decode($parser->scrape($company->parser, $request->get('url'), $request));
 
             if(!empty($scrape)) {
 
                 $bulletsMarkup = "";
-                if(!empty($scrape->bullets)) {
+                if(!empty($scrape->bullet_points)) {
                     $bulletsMarkup .= "<ul>";
-                    foreach($scrape->bullets as $bullet) {
+                    foreach($scrape->bullet_points as $bullet) {
                         $bulletsMarkup .= "<li>$bullet</li>";
                     }
                     $bulletsMarkup .= "</ul>";
                 }
 
                 $product->title = $scrape->title;
-                $product->productId = $scrape->productId;
+                $product->product_id = $scrape->product_id;
                 $product->brand = $scrape->brand;
-                $product->bullets = $bulletsMarkup;
-                $product->dimensions = json_encode($scrape->dimensions); // Getting passed to vue component
-                $product->details = json_encode($scrape->details); // Getting passed to vue component
+                $product->bullet_points = $bulletsMarkup;
+                if(isset($scrape->dimensions)) {
+                    $product->dimensions = json_encode($scrape->dimensions); // Getting passed to vue component
+                }
+                if(isset($scrape->details)) {
+                    $product->details = json_encode($scrape->details); // Getting passed to vue component
+                }
                 $product->sku = $scrape->sku;
-                $product->model = $scrape->model;
-                $product->dollars = $scrape->dollars;
-                $product->cents = $scrape->cents;
-                $product->description = $scrape->description;
+                if(isset($scrape->model)) {
+                    $product->model = $scrape->model;
+                }
+                if(isset($scrape->description)) {
+                    $product->description = $scrape->description;
+                }
+                $product->price = $scrape->price;
                 $product->company = $company;
                 $product->images = json_encode($scrape->images); // Getting passed to vue component
                 $product->scrape = $scrape;
@@ -69,8 +75,7 @@ class ProductController extends Controller {
             }
         } else {
             // Get the companies for the scrape dropdown
-            $companies = new Company;
-            $companies = $companies->all();
+            $companies = Company::orderBy('name')->get();
 
             return view('products.create', ['companies' => $companies]);
         }
@@ -101,7 +106,8 @@ class ProductController extends Controller {
         $product->sku = $this->sanitize($request->sku);
         $product->brand = $this->sanitize($request->brand);
         $product->model = $this->sanitize($request->model);
-        $product->images = json_encode($request->imgs);
+        $product->price = $this->sanitize($request->price);
+        $product->images = $request->imgs;
         $product->description = $this->sanitize($request->description);
 
         $product->save();
@@ -109,10 +115,20 @@ class ProductController extends Controller {
         return redirect('products');
     }
 
+    public function edit(Request $request, String $id) {
+        $product = $this->products->where('id', $id)->first();
+
+        // NiceEdit will not display HTML without doing this:
+        $product->description = html_entity_decode($product->description);
+        $product->bullet_points = html_entity_decode($product->bullet_points);
+
+        return view('products.create_2', ['product' => $product]);
+    }
+
     /**
      * Returns the first image in an array of images
      */
     public function getFirstImage(Product $product) {
-        //print_r($product->images); die();
+        return json_decode($product->images)[0];
     }
 }

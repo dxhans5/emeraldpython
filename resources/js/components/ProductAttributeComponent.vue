@@ -5,7 +5,7 @@
 
       <table class="table table-sm table-borderless">
         <tbody>
-          <tr v-for="(attribute, key) in JSON.parse(this.attributeData)" :key="key">
+          <tr v-for="(attribute, key) in attributeArray" :key="key">
             <td>
               <input type="text" class="form-control" :value="key">
             </td>
@@ -22,6 +22,15 @@
 <script>
 export default {
   props: ["title", "attributeData"],
-  mounted() {}
+  data: function() {
+    return {
+      attributeArray: []
+    };
+  },
+  mounted() {
+    if (this.attributeData.length > 0) {
+      this.attributeArray = JSON.parse(this.attributeData);
+    }
+  }
 };
 </script>

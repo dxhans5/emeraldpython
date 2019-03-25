@@ -169,7 +169,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["title", "attributeData"],
-  mounted: function mounted() {}
+  data: function data() {
+    return {
+      attributeArray: []
+    };
+  },
+  mounted: function mounted() {
+    if (this.attributeData.length > 0) {
+      this.attributeArray = JSON.parse(this.attributeData);
+    }
+  }
 });
 
 /***/ }),
@@ -692,7 +701,7 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             attrs: { type: "hidden", name: "imgs" },
-            domProps: { value: _vm.imgArray }
+            domProps: { value: this.images }
           })
         ],
         1
@@ -729,7 +738,7 @@ var render = function() {
       _c("table", { staticClass: "table table-sm table-borderless" }, [
         _c(
           "tbody",
-          _vm._l(JSON.parse(this.attributeData), function(attribute, key) {
+          _vm._l(_vm.attributeArray, function(attribute, key) {
             return _c("tr", { key: key }, [
               _c("td", [
                 _c("input", {

@@ -81,6 +81,7 @@ SOUP = BeautifulSoup(DRIVER.page_source, 'lxml')
 title = SOUP.select("h1[itemprop='name']")
 brand = SOUP.select(".BrandName > a > span")
 price = SOUP.select("meta[itemprop='price']")
+sku = SOUP.select(".VariationProductSKU")
 productId = str(uuid.uuid4())
 
 bullets = []
@@ -107,19 +108,17 @@ iframe = SOUP2.select('#fancy_frame')
 # Get iframe content
 attemptConnection(iframe[0]['src'])
 SOUP3 = BeautifulSoup(DRIVER.page_source, 'lxml')
-print(SOUP3)
-
 imgs = []
 
-for overlayThumb in SOUP2.findAll(".TinyOuterDiv"):
+for overlayThumb in SOUP3.select(".TinyOuterDiv > a"):
     # Get the individual xpath for each of the valid thumbnails
     xpath = SoupXPath.xpath_soup(overlayThumb)
     # Click on the individual thumbnail
     DRIVER.find_element_by_xpath(xpath).click()
     # Rescan the source to get the updated main image
-    SOUP3 = BeautifulSoup(DRIVER.page_source, 'lxml')
+    SOUP4 = BeautifulSoup(DRIVER.page_source, 'lxml')
 
-    img_element = SOUP3.select(".ProductZoomImage > img")
+    img_element = SOUP4.select(".ProductZoomImage > img")
     img = img_element[0]['src']
     fileName = download_image(img, path)
 
@@ -133,13 +132,9 @@ data = {}
 data = parseData(data, 'title', {'text': title})
 data = parseData(data, 'brand', {'text': brand})
 data = parseData(data, 'price', {'content': price})
-data = parseData(data, 'bullets', {'object': bullets})
+data = parseData(data, 'bullet_points', {'object': bullets})
 data = parseData(data, 'images', {'object': imgs})
-# data = parseData(data, 'dimensions', {'object': dimensions})
-# data = parseData(data, 'details', {'object': details})
-# data = parseData(data, 'sku', {'text': sku})
-# data = parseData(data, 'model', {'text': model})
-# data = parseData(data, 'description', {'text': description})
-data = parseData(data, 'productId', {'object': productId})
+data = parseData(data, 'sku', {'text': sku})
+data = parseData(data, 'product_id', {'object': productId})
 
-# print(json.dumps(data))
+print(json.dumps(data))

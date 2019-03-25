@@ -46,6 +46,10 @@ nav {
     color: $red;
 }
 
+.green {
+    color: $green;
+}
+
 .img-wrapper {
     width: 100px;
     height: 100px;
@@ -81,4 +85,12 @@ nav {
 
 .input-error {
     background-color: $red;
+}
+
+.thumbnail {
+    width: 100%;
+}
+
+.thumbnail-wrapper {
+    width: 150px;
 }
