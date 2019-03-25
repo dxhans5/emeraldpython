@@ -89,3 +89,7 @@ nav ul a:hover {
   width: 150px;
 }
 
+.title-wrapper {
+  max-width: 300px;
+}
+

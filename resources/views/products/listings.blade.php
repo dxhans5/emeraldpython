@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="col-md-6">
             <h3>Products</h3>
         </div>
@@ -20,6 +20,7 @@
                             <th scope="col"></th>
                             <th scope="col">Title</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Brand</th>
                             <th scope="col">Company</th>
                             <th scope="col">Status</th>
                             <th scope="col"></th>
@@ -29,8 +30,9 @@
                         @foreach($products as $product)
                             <tr>
                                 <td class='thumbnail-wrapper'><img class='thumbnail' src='{{ "gallery-images/" . $productController->getFirstImage($product) }}'></td>
-                                <td><a href='{{ url("/products/edit/" . $product->id) }}'>{{ $product->title }}</a></td>
+                                <td class='title-wrapper'><a href='{{ url("/products/edit/" . $product->id) }}'>{{ $product->title }}</a></td>
                                 <td>${{ $product->price }}</td>
+                                <td>{{ $product->brand }}</td>
                                 <td>{{ $product->company->name }}</td>
                                 <td>{{ $product->status }}</td>
                                 <td>
@@ -40,10 +42,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
-                <pre>
-                    <?php print_r($products); ?>
-                </pre>
             @else
                 <hr/>
                 <p>There are no active products</p>
