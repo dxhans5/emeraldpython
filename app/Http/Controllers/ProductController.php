@@ -131,4 +131,13 @@ class ProductController extends Controller {
     public function getFirstImage(Product $product) {
         return json_decode($product->images)[0];
     }
+
+    public function toggleStatus(Request $request, String $id) {
+        $product = $this->products->where('id', $id)->first();
+
+        $product->status == 'active' ? $product->status = 'disabled' : $product->status = 'active';
+        $product->save();
+
+        return redirect('products');
+    }
 }

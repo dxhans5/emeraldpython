@@ -36,7 +36,7 @@
                                 <td>{{ $product->company->name }}</td>
                                 <td>{{ $product->status }}</td>
                                 <td>
-                                    <span class="@if($product->status == 'active') red @else green @endif"><i class="fas fa-exchange-alt"></i></span>
+                                    <a href='{{ url("/products/toggle-status/" . $product->id) }}'><span class="@if($product->status == 'active') red @else green @endif"><i class="fas fa-exchange-alt"></i></span></a>
                                 </td>
                             </tr>
                         @endforeach
