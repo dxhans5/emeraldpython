@@ -18,6 +18,7 @@ class CreatePoliciesTable extends Migration
             $table->enum('policy_type', ['shipping', 'return']);
             $table->string('title');
             $table->text('description');
+            $table->enum('status', ['active', 'disabled'])->default('active');
             $table->timestamps();
         });
     }
