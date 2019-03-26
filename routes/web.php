@@ -24,7 +24,10 @@
         Route::match(array('GET', 'POST'), '/{id}', 'CompanyController@detail');
     });
     Route::get('dashboard/', 'DashboardController');
-    Route::get('policies/', 'PolicyController@list');
+    Route::group(['prefix' => 'policies'], function(){
+        Route::get('/', 'PolicyController@list');
+        Route::match(array('GET', 'POST'), '/create', 'PolicyController@create');
+    });
     Route::group(['prefix' => 'products'], function(){
         Route::get('/', 'ProductController@list');
         Route::match(array('GET', 'POST'), '/create', 'ProductController@create');
