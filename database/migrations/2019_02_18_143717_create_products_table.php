@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->integer('company_id');
             $table->enum('status', ['active', 'disabled'])->default('active');
+            $table->boolean('ebay_ad_created')->default(false);
             $table->timestamps();
         });
     }

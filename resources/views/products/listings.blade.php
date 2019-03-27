@@ -36,7 +36,8 @@
                                 <td>{{ $product->company->name }}</td>
                                 <td>{{ $product->status }}</td>
                                 <td>
-                                    <a href='{{ url("/products/toggle-status/" . $product->id) }}'><span class="@if($product->status == 'active') red @else green @endif"><i class="fas fa-exchange-alt"></i></span></a>
+                                    <a href='{{ url("/products/toggle-status/" . $product->id) }}'><span class="@if($product->status == 'active') red @else green @endif pr-2"><i class="fas fa-exchange-alt"></i></span></a>
+                                    <a href='{{ url("/products/ebay-ad/" . $product->id) }}'><span class="ebayIcon @if($product->ebay_ad_created) green @else red @endif"><i class="fab fa-ebay"></i></span></a>
                                 </td>
                             </tr>
                         @endforeach

@@ -35,4 +35,5 @@
         Route::post('/submit', 'ProductController@submit');
         Route::get('/edit/{id}', 'ProductController@edit');
         Route::get('/toggle-status/{id}', 'ProductController@toggleStatus');
+        Route::get('/ebay-ad/{id}', 'ProductController@ebayAd');
     });

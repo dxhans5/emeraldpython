@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Product;
 use Facades\App\Models\Company;
 use App\Classes\Parsers\ParserLoader;
+use App\Classes\EbaySDK\EbaySDK;
 
 class ProductController extends Controller {
 
@@ -135,6 +137,9 @@ class ProductController extends Controller {
         return json_decode($product->images)[0];
     }
 
+    /**
+     * Toggles the status of a product (active, disabled)
+     */
     public function toggleStatus(Request $request, String $id) {
         $product = $this->products->where('id', $id)->first();
 
@@ -142,5 +147,36 @@ class ProductController extends Controller {
         $product->save();
 
         return redirect('products');
+    }
+
+    /**
+     * Manipulates an ebay ad from the product data
+     */
+    public function ebayAd(Request $request, String $id) {
+        $product = $this->products->where('id', $id)->first();
+
+        $ebaySDK = new EbaySDK();
+        $response = $ebaySDK->AddItem($product);
+        if(!empty($errors = $this->processErrors($response))) {
+            session(['errors' => $errors]);
+            return Redirect::back();
+        };
+
+        return $response;
+    }
+
+    /**
+     * Processes errors from the SDK, if any
+     */
+    private function processErrors($response) {
+        if($response->Errors) {
+            $errors = [];
+            foreach($response->Errors as $error) {
+                $errors[] = $error->LongMessage;
+            }
+
+            return $errors;
+        }
+
     }
 }

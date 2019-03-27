@@ -10,7 +10,8 @@
         "fabpot/goutte": "^3.2",
         "orchestra/parser": "~3.0",
         "symfony/process": "^4.2",
-        "laravelcollective/html": "^5.7"
+        "laravelcollective/html": "^5.7",
+        "dts/ebay-sdk-php": "^18.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
