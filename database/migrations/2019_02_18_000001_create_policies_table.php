@@ -15,6 +15,7 @@ class CreatePoliciesTable extends Migration
     {
         Schema::create('policies', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('policy_id');
             $table->enum('policy_type', ['shipping', 'return']);
             $table->string('title');
             $table->text('description');

@@ -115,6 +115,9 @@ class ProductController extends Controller {
         return redirect('products');
     }
 
+    /**
+     * Invokes the edit form (reuses the create form with different input)
+     */
     public function edit(Request $request, String $id) {
         $product = $this->products->where('id', $id)->first();
 

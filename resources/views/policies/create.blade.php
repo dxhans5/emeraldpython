@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="post" action="{{ url('products/submit') }}">
+<form method="post" action="{{ url('policies/create') }}">
 @csrf
     <div class="row">
         <div class="col-sm-6">
@@ -22,6 +22,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Policy Information</h5>
 
+                    <input type="hidden" class="form-control" id="policy_id" name="policy_id" value="{{ $policy->policy_id }}">
+
                     <div class="form-group col-sm-12">
                         <label for="title">Title</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ $policy->title }}">
@@ -30,8 +32,8 @@
                     <div class="form-group col-sm-12">
                         <label for="type">Type</label>
                         <select class="form-control" id="type" name="type">
-                            <option value="shipping">Shipping</option>
-                            <option value="return">Return</option>
+                            <option value="shipping" @if($policy->policy_type == 'shipping') selected @endif>Shipping</option>
+                            <option value="return" @if($policy->policy_type == 'return') selected @endif>Return</option>
                         </select>
                     </div>
 

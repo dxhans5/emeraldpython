@@ -27,6 +27,7 @@
     Route::group(['prefix' => 'policies'], function(){
         Route::get('/', 'PolicyController@list');
         Route::match(array('GET', 'POST'), '/create', 'PolicyController@create');
+        Route::get('/edit/{id}', 'PolicyController@edit');
     });
     Route::group(['prefix' => 'products'], function(){
         Route::get('/', 'ProductController@list');
