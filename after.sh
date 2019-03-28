@@ -25,8 +25,8 @@ sudo apt autoremove
 ## Setup the database
 cd /vagrant/
 
-# Install requests
-sudo pip install requests
+# Install EBay Python SDK
+pip install ebaysdk
 
 # Run migrations
 php artisan migrate --seed

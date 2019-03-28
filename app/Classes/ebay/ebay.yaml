@@ -1,0 +1,27 @@
+name: ebay_api_config
+
+# Trading API Sandbox - https://www.x.com/developers/ebay/products/trading-api
+api.sandbox.ebay.com:
+    compatibility: 719
+    appid: PugVentu-Primary-PRD-d5d7504c4-fe7871e2
+    certid: PRD-5d7504c42790-3986-4fac-a791-e208
+    devid: cb70e5b0-d647-4401-a33f-91702d7ed6c4
+    token: AgAAAA**AQAAAA**aAAAAA**AyKdXA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6ACmYOiD5iLqQ+dj6x9nY+seQ**mBUEAA**AAMAAA**lvv/CYRnI3v8D/ejgOazwtdal0tY664jJrmRh0EvuXcbBUy6ag8CGWBVionEp6HrjQIg0j14E5yo7+30y+Apwn2wGd11ja7OrR2D6Bg1TRiByaRAa4KmFBLu6u6dmlIZzWWUhkWEDoN0jjDA6MOyZOWkfUu9xpLeU6QxLB+oXZwgtoi/4OmKdhCTmLbng6I+KLhQki3gj6wrVo/hFaaD1XXPRaUju2coeouZtpywtFok50jhq3e1+PuSC4vhXzunJQOTdnmpIdUU5XUBBmwalB8IHCIuJcvSgYUqwDpCxW5tSzn6IZLwyRqn0YRDlDoVsLg6+jRdGa4bs5lZpKBYFsbv0ElKwv0a5uiVe6MCcqonSAo1cy5CtL1k0tGoVtexGs1SvUvcu6uXY7dQJ0/WnLyHLc++8VhOo8tFO0IP4xTLx6pbNppWnsKFHc3DFUIQ+/ZncyemLE4tDe6qJV3OoVqD7tnWEbT0x6P4bp5MJWZ5PaTbA8ZODHOVIxvnoUIUh2y5EnsNg9nCfrQNFD3BmVE4oqcT5SEePHOt7OLohCO1SsuOavHmBIkqP4zyBToEWRYvTWGQsNcZ7VrQL2AN1298y00oiZJaYNe5tDJJay44j3/JpeAnk0kZscTUn/w0eIOF2M33vSh6D0xnibYIdr0kbxi1vDuGXGD1FxJChIeEzao/GNX5Sd+6r2dH1DYG/ZHxDJ41Znq8y387BWeeGzAkkU2qalYu8PfoS04hbdns5pXpAfFTkL2niNbbUerd
+
+# Trading API - https://www.x.com/developers/ebay/products/trading-api
+api.ebay.com:
+    compatibility: 719
+    appid: PugVentu-Primary-PRD-d5d7504c4-fe7871e2
+    certid: PRD-5d7504c42790-3986-4fac-a791-e208
+    devid: cb70e5b0-d647-4401-a33f-91702d7ed6c4
+    token: AgAAAA**AQAAAA**aAAAAA**AyKdXA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6ACmYOiD5iLqQ+dj6x9nY+seQ**mBUEAA**AAMAAA**lvv/CYRnI3v8D/ejgOazwtdal0tY664jJrmRh0EvuXcbBUy6ag8CGWBVionEp6HrjQIg0j14E5yo7+30y+Apwn2wGd11ja7OrR2D6Bg1TRiByaRAa4KmFBLu6u6dmlIZzWWUhkWEDoN0jjDA6MOyZOWkfUu9xpLeU6QxLB+oXZwgtoi/4OmKdhCTmLbng6I+KLhQki3gj6wrVo/hFaaD1XXPRaUju2coeouZtpywtFok50jhq3e1+PuSC4vhXzunJQOTdnmpIdUU5XUBBmwalB8IHCIuJcvSgYUqwDpCxW5tSzn6IZLwyRqn0YRDlDoVsLg6+jRdGa4bs5lZpKBYFsbv0ElKwv0a5uiVe6MCcqonSAo1cy5CtL1k0tGoVtexGs1SvUvcu6uXY7dQJ0/WnLyHLc++8VhOo8tFO0IP4xTLx6pbNppWnsKFHc3DFUIQ+/ZncyemLE4tDe6qJV3OoVqD7tnWEbT0x6P4bp5MJWZ5PaTbA8ZODHOVIxvnoUIUh2y5EnsNg9nCfrQNFD3BmVE4oqcT5SEePHOt7OLohCO1SsuOavHmBIkqP4zyBToEWRYvTWGQsNcZ7VrQL2AN1298y00oiZJaYNe5tDJJay44j3/JpeAnk0kZscTUn/w0eIOF2M33vSh6D0xnibYIdr0kbxi1vDuGXGD1FxJChIeEzao/GNX5Sd+6r2dH1DYG/ZHxDJ41Znq8y387BWeeGzAkkU2qalYu8PfoS04hbdns5pXpAfFTkL2niNbbUerd
+
+# Finding API - https://www.x.com/developers/ebay/products/finding-api
+svcs.ebay.com:
+    appid: PugVentu-Primary-PRD-d5d7504c4-fe7871e2
+    version: 1.0.0
+
+# Shopping API - https://www.x.com/developers/ebay/products/shopping-api
+open.api.ebay.com:
+    appid: PugVentu-Primary-PRD-d5d7504c4-fe7871e2
+    version: 671
