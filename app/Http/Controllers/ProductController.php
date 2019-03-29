@@ -155,12 +155,25 @@ class ProductController extends Controller {
     public function ebayAd(Request $request, String $id) {
         $product = $this->products->where('id', $id)->first();
 
-        $item = [];
+        $item = [
+            'Item' => [
+                'Currency' => 'USD'
+            ]
+        ];
 
         $ebay = new ebayInterface();
-        $ebayResponse = $ebay->run('Trading', 'AddItem', json_encode($item));
-        print_r($ebayResponse); die();
+        $response = json_decode($ebay->run('Trading', 'AddItem', addslashes(json_encode($item))));
 
+        if($response->Ack == 'Failure') {
+            $errors = [];
+            foreach($response->Errors as $error) {
+                $errors[] = "Ebay: " . $error->ShortMessage;
+                // Something screwed up...
+                session()->forget('errors'); // just in case there are errors left over from something (edge case)
+                session()->flash('errors', $errors);
+                return back();
+            }
+        }
 
         return $response;
     }

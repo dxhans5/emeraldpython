@@ -1,5 +1,8 @@
 import sys
-from TradingModule import TradingModule
+import json
+
+from ebaysdk.exception import ConnectionError
+from ebaysdk.trading import Connection as trading
 
 APPID = "PugVentu-Primary-PRD-d5d7504c4-fe7871e2"
 DEVID = "cb70e5b0-d647-4401-a33f-91702d7ed6c4"
@@ -11,23 +14,15 @@ class Ebay:
 
     def __init__(self, module, endpoint, payload):
         mods = {
-            'Trading': TradingModule
+            'Trading':  trading(appid=APPID, devid=DEVID, certid=CERTID, token=TOKEN, config_file=None)
         }
-
-        # Execute the method
-        mod = mods.get(module)
-        mod(endpoint, payload)
+        try:
+            api = mods.get(module)
+            response = api.execute(endpoint, json.loads(payload))
+            print(json.dumps(response.dict()))
+            print(json.dumps(response.reply))
+        except ConnectionError as e:
+            print(json.dumps(e.response.dict()))
 
 
 Ebay(sys.argv[1], sys.argv[2], sys.argv[3])
-
-
-# try:
-#     api = trading(appid=APPID, devid=DEVID, certid=CERTID,
-#                   token=TOKEN, config_file=None)
-#     response = api.execute('AddItem', {})
-#     print(response.dict())
-#     print(response.reply)
-# except ConnectionError as e:
-#     print(e)
-#     print(e.response.dict())
