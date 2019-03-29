@@ -13,6 +13,7 @@ class ebayInterface {
         $process = new Process($command);
         $process->run();
 
+        print_r($process->getOutput()); die();
         // executes after the command finishes
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);

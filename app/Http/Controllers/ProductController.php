@@ -166,20 +166,7 @@ class ProductController extends Controller {
         $response = json_decode($ebay->run('Trading', 'AddFixedPriceItem', addslashes(json_encode($item))));
 
         if($response->Ack == 'Failure') {
-            $errors = [];
-            if(is_array($response->Errors)) {
-                foreach($response->Errors as $error) {
-                    $msg = isset($error->ShortMessage) ? $error->ShortMessage : $error->LongMessage;
-                    $errors[] = "Ebay: " . $msg;
-                }
-            } else {
-                $msg = isset($response->Errors->ShortMessage) ? $response->Errors->ShortMessage : $response->Errors->LongMessage;
-                $errors[] = "Ebay: " . $msg;
-            }
-
-            session()->forget('errors'); // just in case there are errors left over from something (edge case)
-            session()->flash('errors', $errors);
-            return back();
+            $this->processEbayAPIErrors($response);
         }
 
         return $response;

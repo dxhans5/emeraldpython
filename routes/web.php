@@ -17,6 +17,12 @@
 
     Route::get('', 'DashboardController');
 
+    Route::group(['prefix' => 'categories'], function(){
+        Route::get('/', 'CategoryController@list');
+        Route::match(array('GET', 'POST'), '/create', 'CategoryController@create');
+        Route::get('/edit/{id}', 'CategoryController@edit');
+        Route::get('/ebay-update', 'CategoryController@ebayUpdate');
+    });
     Route::group(['prefix' => 'companies'], function(){
         Route::get('/', 'CompanyController@list');
         Route::match(array('GET', 'POST'), '/create', 'CompanyController@create');
