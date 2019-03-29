@@ -157,22 +157,29 @@ class ProductController extends Controller {
 
         $item = [
             'Item' => [
-                'Currency' => 'USD'
+                'Currency' => 'USD',
+                'Country' => 'US'
             ]
         ];
 
         $ebay = new ebayInterface();
-        $response = json_decode($ebay->run('Trading', 'AddItem', addslashes(json_encode($item))));
+        $response = json_decode($ebay->run('Trading', 'AddFixedPriceItem', addslashes(json_encode($item))));
 
         if($response->Ack == 'Failure') {
             $errors = [];
-            foreach($response->Errors as $error) {
-                $errors[] = "Ebay: " . $error->ShortMessage;
-                // Something screwed up...
-                session()->forget('errors'); // just in case there are errors left over from something (edge case)
-                session()->flash('errors', $errors);
-                return back();
+            if(is_array($response->Errors)) {
+                foreach($response->Errors as $error) {
+                    $msg = isset($error->ShortMessage) ? $error->ShortMessage : $error->LongMessage;
+                    $errors[] = "Ebay: " . $msg;
+                }
+            } else {
+                $msg = isset($response->Errors->ShortMessage) ? $response->Errors->ShortMessage : $response->Errors->LongMessage;
+                $errors[] = "Ebay: " . $msg;
             }
+
+            session()->forget('errors'); // just in case there are errors left over from something (edge case)
+            session()->flash('errors', $errors);
+            return back();
         }
 
         return $response;
