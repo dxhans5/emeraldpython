@@ -158,7 +158,7 @@ class ProductController extends Controller {
         $item = [];
 
         $ebay = new ebayInterface();
-        $ebayResponse = $ebay->run('AddItem', json_encode($item));
+        $ebayResponse = $ebay->run('Trading', 'AddItem', json_encode($item));
         print_r($ebayResponse); die();
 
 

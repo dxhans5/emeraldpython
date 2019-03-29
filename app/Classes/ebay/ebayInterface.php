@@ -6,8 +6,8 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ebayInterface {
-    public function run(String $endpoint, JSON $payload) {
-        $command = "python /vagrant/app/Classes/ebay/ebay.py $endpoint $payload";
+    public function run(String $module, String $endpoint, JSON $payload) {
+        $command = "python /vagrant/app/Classes/ebay/ebay.py $module $endpoint $payload";
 
         $process = new Process($command);
         $process->run();
