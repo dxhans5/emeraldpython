@@ -12,17 +12,23 @@ TOKEN = "AgAAAA**AQAAAA**aAAAAA**AyKdXA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6ACmYOiD5i
 
 class Ebay:
 
-    def __init__(self, module, endpoint, payload):
+    def __init__(self, module, endpoint, payload, returnDictOnly=True):
         mods = {
             'Trading':  trading(appid=APPID, devid=DEVID, certid=CERTID, token=TOKEN, config_file=None)
         }
         try:
             api = mods.get(module)
             response = api.execute(endpoint, json.loads(payload))
-            print(json.dumps(response.dict()))
-            print(json.dumps(response.reply))
+
+            if(returnDictOnly):
+                print(json.dumps(response.dict()))
+            else:
+                print(json.dumps(response.reply))
         except ConnectionError as e:
             print(json.dumps(e.response.dict()))
 
 
-Ebay(sys.argv[1], sys.argv[2], sys.argv[3])
+if(len(sys.argv) == 4):
+    Ebay(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+else:
+    Ebay(sys.argv[1], sys.argv[2], sys.argv[3])

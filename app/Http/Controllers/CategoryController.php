@@ -64,15 +64,24 @@ class CategoryController extends Controller
             'DetailLevel' => 'ReturnAll'
         ];
         $ebay = new ebayInterface();
-        $response = json_decode($ebay->run('Trading', 'GetCategories', addslashes(json_encode($options))));
+        $response = json_decode($ebay->run('Trading', 'GetCategories', addslashes(json_encode($options)), 'True'));
 
-        print_r($response); die();
-
-        if($response->Ack == 'Failure') {
+        if(isset($response->Ack) && $response->Ack == 'Failure') {
             $this->processEbayAPIErrors($response);
         }
 
+        $this->processEbayCategories($response);
+
         $categories = Category::all();
         return view('categories.listings', ['categories' => $categories]);
+    }
+
+    /**
+     * Processes and saves the ebay categories
+     */
+    private function processEbayCategories($categories) {
+        foreach($categories->CategoryArray->Category as $category) {
+            print_r($categories->CategoryArray); die();
+        }
     }
 }
