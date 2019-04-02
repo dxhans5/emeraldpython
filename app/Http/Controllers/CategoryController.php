@@ -80,8 +80,17 @@ class CategoryController extends Controller
      * Processes and saves the ebay categories
      */
     private function processEbayCategories($categories) {
+        $bulkInsert = [];
         foreach($categories->CategoryArray->Category as $category) {
-            print_r($categories->CategoryArray); die();
+            $bulkInsert[] = [
+                'category_id' => $category->CategoryID,
+                'name' => $category->CategoryName,
+                'level' => $category->CategoryLevel,
+                'autopay_enabled' => isset($category->AutoPayEnabled) ? $category->AutoPayEnabled : false,
+                'best_offer_enabled' => isset($category->BestOfferEnabled) ? $category->BestOfferEnabled : false,
+                'parent_id' => $category->CategoryParentID
+            ];
         }
+        print_r($bulkInsert); die();
     }
 }
