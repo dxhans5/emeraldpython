@@ -16,10 +16,11 @@ class CreateCategorysTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->string('category_id');
+            $table->integer('category_id');
             $table->string('name');
+            $table->string('category_path')->nullable()->default(NULL);
             $table->integer('level');
-            $table->string('parent_id');
+            $table->integer('parent_id');
             $table->boolean('autopay_enabled')->default(false);
             $table->boolean('b2bvat_enabled')->default(false);
             $table->boolean('best_offer_enabled')->default(false);

@@ -17,10 +17,12 @@
         <div class="col-md-12">
             @if(!empty($categories))
 
+                {{ $categories->links() }}
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
+                            <th scope="col">Path</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -28,6 +30,7 @@
                         @foreach($categories as $category)
                             <tr>
                                 <td class='title-wrapper'><a href='{{ url("/categories/edit/" . $category->id) }}'>{{ $category->name }}</a></td>
+                                <td>{{ $category->category_path }}</td>
                             </tr>
                         @endforeach
                     </tbody>

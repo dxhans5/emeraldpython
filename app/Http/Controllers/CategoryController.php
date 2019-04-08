@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Facades\App\Models\Category;
@@ -22,7 +23,15 @@ class CategoryController extends Controller
      * Invokes the product list
      */
     public function list(Request $request) {
-        $categories = Category::all();
+        $categories = Category::paginate(20);
+
+        // Update the category path if it's not set
+        foreach($categories as $category) {
+            if(empty($category->category_path)) {
+                $category->category_path = substr($this->processCategoryPath($category), 0, -1);
+                $category->save();
+            }
+        }
         return view('categories.listings', ['categories' => $categories]);
     }
 
@@ -71,9 +80,7 @@ class CategoryController extends Controller
         }
 
         $this->processEbayCategories($response);
-
-        $categories = Category::all();
-        return view('categories.listings', ['categories' => $categories]);
+        return redirect('categories');
     }
 
     /**
@@ -81,16 +88,51 @@ class CategoryController extends Controller
      */
     private function processEbayCategories($categories) {
         $bulkInsert = [];
-        foreach($categories->CategoryArray->Category as $category) {
-            $bulkInsert[] = [
-                'category_id' => $category->CategoryID,
-                'name' => $category->CategoryName,
-                'level' => $category->CategoryLevel,
-                'autopay_enabled' => isset($category->AutoPayEnabled) ? $category->AutoPayEnabled : false,
-                'best_offer_enabled' => isset($category->BestOfferEnabled) ? $category->BestOfferEnabled : false,
-                'parent_id' => $category->CategoryParentID
-            ];
+        $categories = $categories->CategoryArray->Category;
+        usort($categories, array($this, "categorySort"));
+
+        foreach($categories as $category) {
+            if(Category::where('category_id', $category->CategoryID)->count() === 0) {
+                $bulkInsert[] = [
+                    'category_id' => (int)$category->CategoryID,
+                    'name' => $category->CategoryName,
+                    'level' => $category->CategoryLevel,
+                    'autopay_enabled' => (isset($category->AutoPayEnabled) && $category->AutoPayEnabled == 'true') ? true : false,
+                    'best_offer_enabled' => (isset($category->BestOfferEnabled) && $category->BestOfferEnabled == 'true') ? true : false,
+                    'parent_id' => (int)$category->CategoryParentID,
+                    'last_ebay_updated' => Carbon::now()->toDateTimeString()
+                ];
+            }
         }
-        print_r($bulkInsert); die();
+        $collection = collect($bulkInsert);
+        $chunks = $collection->chunk(200);
+
+        foreach($chunks as $chunk) {
+            Category::insert($chunk->toArray());
+        }
+    }
+
+    /**
+     * Recursively creates category path
+     */
+    private function processCategoryPath($category, $path = '') {
+        $path = $category->name . '/' . $path;
+
+        if($category->parent_id === $category->category_id) {
+            return $path;
+        } else {
+            $parent = Category::where('category_id', $category->parent_id)->first();
+            return $this->processCategoryPath($parent, $path);
+        }
+    }
+
+    /**
+     * Category sorter
+     */
+    private function categorySort($a, $b) {
+        if($a->CategoryParentID == $b->CategoryParentID) {
+            return $a->CategoryParentID - $b->CategoryParentID;
+        }
+        return strcmp($a->CategoryID, $b->CategoryID);
     }
 }
