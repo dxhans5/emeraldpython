@@ -23,7 +23,7 @@ class CategoryController extends Controller
      * Invokes the product list
      */
     public function list(Request $request) {
-        $categories = Category::paginate(20);
+        $categories = Category::orderBy('name', 'asc')->paginate(20);
 
         // Update the category path if it's not set
         foreach($categories as $category) {
